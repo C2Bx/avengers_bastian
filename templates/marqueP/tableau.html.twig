@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Avengers{% endblock %}
+
+{% block head %}
+{{ parent() }}
+<style>
+    /* Styles personnalisés pour améliorer l'apparence du tableau */
+    .table-custom thead th {
+        background-color: #007bff; /* Couleur d'arrière-plan plus dynamique pour l'en-tête */
+        color: white; /* Texte blanc pour un contraste élevé */
+    }
+
+    .table-custom tbody td {
+        background-color: #f8f9fa; /* Léger arrière-plan pour les cellules pour améliorer la lisibilité */
+    }
+
+    .table-custom tbody tr:nth-of-type(odd) {
+        background-color: #e9ecef; /* Alternance de couleurs pour les lignes pour une meilleure distinction */
+    }
+
+    .table-custom {
+        border: 2px solid #dee2e6; /* Bordure plus épaisse pour le tableau */
+    }
+
+    .alert-custom {
+        background-color: #ffcccc; /* Arrière-plan personnalisé pour l'alerte */
+        border-color: #ffaaaa; /* Bordure personnalisée pour l'alerte */
+        color: #cc0000; /* Texte personnalisé pour l'alerte */
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Liste des Avengers</h1>
+
+    {% if marquesP is not empty %}
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover shadow table-custom">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Pouvoir</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mpr in marquesP %}
+                <tr>
+                    <td>{{ mpr.id }}</td>
+                    <td>{{ mpr.url }}</td>
+                    <td>{{ mpr.commentaire }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="alert alert-info alert-custom" role="alert">
+        Aucun Avenger trouvé.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
