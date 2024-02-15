@@ -1,0 +1,33 @@
+{# templates/marquePage/detail.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Marque-Page{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1>Détails du Marque-Page</h1>
+    <table class="table-custom">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Commentaire</th>
+                <th>Date de Création</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ marquePage.id }}</td>
+                <td>{{ marquePage.url }}</td>
+                <td>{{ marquePage.commentaire }}</td>
+                <td>{{ marquePage.dateCreation|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}
