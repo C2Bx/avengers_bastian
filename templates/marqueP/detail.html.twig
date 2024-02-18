@@ -11,20 +11,29 @@
 {% block body %}
 <div class="container mt-5">
     <h1>Détails du Marque-Page</h1>
+
     <table class="table-custom">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Commentaire</th>
-                <th>Date de Création</th>
+                <th scope="col">Libelle</th>
+                <th scope="col">Valeur</th>
             </tr>
         </thead>
         <tbody>
             <tr>
+                <th scope="row"> id </th>
                 <td>{{ marquePage.id }}</td>
+            </tr>
+            <tr>
+                <th scope="row"> url </th>
                 <td>{{ marquePage.url }}</td>
+            </tr>
+            <tr>
+                <th scope="row"> commentaire </th>
                 <td>{{ marquePage.commentaire }}</td>
+            </tr>
+            <tr>
+                <th scope="row"> dateCreation </th>
                 <td>{{ marquePage.dateCreation|date('Y-m-d H:i:s') }}</td>
             </tr>
         </tbody>
