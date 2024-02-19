@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+
+use App\Entity\MarquePage;
+
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping;
+
+class MarquePagesController extends AbstractController
+{
+    #[Mapping\Id]
+    #[Mapping\GeneratedValue]
+    #[Mapping\Column(type: "integer")]
+    private $id;
+
+    #[Mapping\Column(type: "string")]
+    private $url;
+
+    #[Mapping\Column(type: "string")]
+    private $commentaire;
+
+    #[Route('/')]
+    public function marquePages(EntityManagerInterface $entityManager): Response
+    {
+        $marque_pages = $entityManager->getRepository(MarquePage::class)->findAll();
+        //var_dump($marque_pages);
+        $tab = '';
+        foreach ($marque_pages as $marque_page){
+            foreach ($marque_page as $elem){
+                 $tab += $elem;
+            }
+        }
+        return $this->render('marque_pages/marque_page.html.twig' , ['tab' => $tab]);
+    }
+}

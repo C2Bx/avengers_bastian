@@ -14,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method MarquePage[]    findAll()
  * @method MarquePage[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MarquePagesRepository extends ServiceEntityRepository
+class MarquePageRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

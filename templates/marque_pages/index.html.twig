@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Marque pages{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+
+        {% if marque_pages is not empty %}
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover shadow table-custom">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Commentaire</th>
+                        <th>Détails du marque page</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for mpr in marque_pages %}
+                        <tr>
+                            <td>{{ mpr.id }}</td>
+                            <td>{{ mpr.url }}</td>
+                            <td>{{ mpr.commentaire }}</td>
+                            <td><a style="border: unset" href="details/{{ mpr.id }}">Détails</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info alert-custom" role="alert">
+                Aucun Avenger trouvé.
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

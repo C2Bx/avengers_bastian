@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\MarquePagesRepository;
+use App\Repository\MarquePageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: MarquePagesRepository::class)]
+#[ORM\Entity(repositoryClass: MarquePageRepository::class)]
 class MarquePage
 {
     #[ORM\Id]
@@ -17,11 +19,19 @@ class MarquePage
     #[ORM\Column(length: 255)]
     private ?string $url = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date_creation = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $commentaire = null;
+
+    #[ORM\ManyToMany(targetEntity: MotsCles::class, inversedBy: 'marquePages')]
+    private Collection $motsCles;
+
+    public function __construct()
+    {
+        $this->motsCles = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -52,15 +62,40 @@ class MarquePage
         return $this;
     }
 
-    public function getcommentaire(): ?string
+    public function getCommentaire(): ?string
     {
         return $this->commentaire;
     }
 
-    public function setcommentaire(?string $commentaire): static
+    public function setCommentaire(?string $commentaire): static
     {
         $this->commentaire = $commentaire;
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, MotsCles>
+     */
+    public function getMotsCles(): Collection
+    {
+        return $this->motsCles;
+    }
+
+    public function addMotsCle(MotsCles $motsCle): static
+    {
+        if (!$this->motsCles->contains($motsCle)) {
+            $this->motsCles->add($motsCle);
+        }
+
+        return $this;
+    }
+
+    public function removeMotsCle(MotsCles $motsCle): static
+    {
+        $this->motsCles->removeElement($motsCle);
+
+        return $this;
+    }
+
 }
