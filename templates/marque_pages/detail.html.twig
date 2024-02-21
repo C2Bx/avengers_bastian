@@ -3,47 +3,59 @@
 {% block title %}Détails du Marque-Page{% endblock %}
 
 {% block stylesheets %}
-{# Custom styles can be added here if necessary #}
+<style>
+    .table-custom {
+        /* Styles personnalisés pour la table */
+    }
+</style>
 {% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
+    <article class="container mt-5">
         <h1>Détails du Marque-Page</h1>
 
-        <table class="table-custom">
-            <thead>
-            <tr>
-                <th scope="col">Libelle</th>
-                <th scope="col">Valeur</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <th scope="row"> id </th>
-                <td>{{ marquePage.id }}</td>
-            </tr>
-            <tr>
-                <th scope="row"> url </th>
-                <td>{{ marquePage.url }}</td>
-            </tr>
-            <tr>
-                <th scope="row"> commentaire </th>
-                <td>{{ marquePage.commentaire }}</td>
-            </tr>
-            <tr>
-                <th scope="row"> dateCreation </th>
-                <td>{{ marquePage.dateCreation|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th scope="row"> motsCles </th>
-                <td>
-                    {% for mc in marquePage.getMotsCles %}
-                        {{ mc.getMotCle }} 
-                    {% endfor %}
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <a href="/marque-pages">Retour à la liste</a>
+        <section>
+            <table class="table-custom">
+                <thead>
+                <tr>
+                    <th scope="col">Libellé</th>
+                    <th scope="col">Valeur</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">ID</th>
+                    <td>{{ marquePage.id }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">URL</th>
+                    <td>{{ marquePage.url }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Commentaire</th>
+                    <td>{{ marquePage.commentaire }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Date de Création</th>
+                    <td>{{ marquePage.dateCreation|date('d/m/Y H:i') }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Mots Clés</th>
+                    <td>
+                        {% if marquePage.getMotsCles|length > 0 %}
+                            <ul>
+                                {% for mc in marquePage.getMotsCles %}
+                                    <li>{{ mc.getMotCle }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            Aucun mot clé.
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+        <a href="/marque-pages">Retour à la liste</a>
+    </article>
 {% endblock %}
