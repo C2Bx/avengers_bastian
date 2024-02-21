@@ -2,60 +2,57 @@
 
 {% block title %}Détails du Marque-Page{% endblock %}
 
-{% block stylesheets %}
-<style>
-    .table-custom {
-        /* Styles personnalisés pour la table */
-    }
-</style>
+{% block head %}
+    {# Assurez-vous que le fichier CSS existe et est correctement lié dans votre base.html.twig ou ici directement #}
+    <link href="{{ asset('styles/details.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
-    <article class="container mt-5">
-        <h1>Détails du Marque-Page</h1>
+<div class="container mt-5">
+    <h1 class="mb-4">Détails du Marque-Page</h1>
 
-        <section>
-            <table class="table-custom">
-                <thead>
-                <tr>
-                    <th scope="col">Libellé</th>
-                    <th scope="col">Valeur</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">ID</th>
-                    <td>{{ marquePage.id }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">URL</th>
-                    <td>{{ marquePage.url }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Commentaire</th>
-                    <td>{{ marquePage.commentaire }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Date de Création</th>
-                    <td>{{ marquePage.dateCreation|date('d/m/Y H:i') }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Mots Clés</th>
-                    <td>
-                        {% if marquePage.getMotsCles|length > 0 %}
-                            <ul>
-                                {% for mc in marquePage.getMotsCles %}
-                                    <li>{{ mc.getMotCle }}</li>
-                                {% endfor %}
-                            </ul>
-                        {% else %}
-                            Aucun mot clé.
-                        {% endif %}
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </section>
-        <a href="/marque-pages">Retour à la liste</a>
-    </article>
+    <section class="details-section">
+        <table class="table table-striped details-table">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">Libellé</th>
+                <th scope="col">Valeur</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">ID</th>
+                <td>{{ marquePage.id }}</td>
+            </tr>
+            <tr>
+                <th scope="row">URL</th>
+                <td><a href="{{ marquePage.url }}" target="_blank">{{ marquePage.url }}</a></td>
+            </tr>
+            <tr>
+                <th scope="row">Commentaire</th>
+                <td>{{ marquePage.commentaire }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Date de Création</th>
+                <td>{{ marquePage.dateCreation|date('d/m/Y H:i') }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Mots Clés</th>
+                <td>
+                    {% if marquePage.getMotsCles|length > 0 %}
+                        <ul class="list-unstyled">
+                            {% for mc in marquePage.getMotsCles %}
+                                <li>{{ mc.getMotCle }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        Aucun mot clé.
+                    {% endif %}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+    <a href="/marque-pages" class="btn btn-primary">Retour à la liste</a>
+</div>
 {% endblock %}

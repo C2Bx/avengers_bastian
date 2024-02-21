@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Livre{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Détails du Livre</h1>
+
+        <section>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ livre.titre }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ livre.auteur }}</h6>
+                    <p class="card-text">{{ livre.resume }}</p>
+
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <th scope="row">ID</th>
+                                <td>{{ livre.id }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Titre</th>
+                                <td>{{ livre.titre }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Auteur</th>
+                                <td>{{ livre.auteur }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Année de Parution</th>
+                                <td>{{ livre.anneeParution|date('Y') }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">ISBN</th>
+                                <td>{{ livre.isbn }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Genre</th>
+                                <td>{{ livre.genre }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Nombre de Pages</th>
+                                <td>{{ livre.nombrePages }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Langue</th>
+                                <td>{{ livre.langue }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Éditeur</th>
+                                <td>{{ livre.editeur }}</td>
+                            </tr>
+                            {# Ajoutez ici d'autres informations si nécessaire #}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <a href="{{ path('livre_liste') }}" class="btn btn-primary">Retour à la liste</a>
+    </div>
+{% endblock %}

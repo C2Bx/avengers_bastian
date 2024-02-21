@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Flore{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Flore</h1>
+    <div class="row">
+        {% if flore is not empty %}
+            {% for plante in flore %}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <img src="{{ asset(plante.img) }}" class="card-img-top" alt="Image de flore">
+                        <div class="card-body">
+                            <p class="card-text">{{ plante.commentaire }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info">Aucune plante trouvée.</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

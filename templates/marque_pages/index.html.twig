@@ -3,39 +3,46 @@
 {% block title %}Marque pages{% endblock %}
 
 {% block head %}
-
+    {# Vous pouvez ajouter des styles ou des scripts spécifiques pour cette page ici #}
 {% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
-
-        {% if marque_pages is not empty %}
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover shadow table-custom">
-                    <thead class="thead-dark">
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Marque pages</h1>
+    {% if marque_pages is not empty %}
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
                     <tr>
                         <th>ID</th>
                         <th>Nom</th>
                         <th>Commentaire</th>
-                        <th>Détails du marque page</th>
+                        <th>Détails</th>
                     </tr>
-                    </thead>
-                    <tbody>
+                </thead>
+                <tbody>
                     {% for mpr in marque_pages %}
                         <tr>
                             <td>{{ mpr.id }}</td>
-                            <td>{{ mpr.url }}</td>
+                            <td>
+                                <a href="{{ mpr.url }}" target="_blank">{{ mpr.url }}</a>
+                            </td>
                             <td>{{ mpr.commentaire }}</td>
-                            <td><a style="border: unset" href="details/{{ mpr.id }}">Détails</a></td>
+                            <td>
+                                <a class="btn btn-primary" href="{{ path('marque_page_details', {'id': mpr.id}) }}">
+                                    <i class="fas fa-info-circle"></i> Détails
+                                </a>
+                            </td>
                         </tr>
                     {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% else %}
-            <div class="alert alert-info alert-custom" role="alert">
-                Aucun Avenger trouvé.
-            </div>
-        {% endif %}
-    </div>
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            Aucun marque-page trouvé.
+        </div>
+    {% endif %}
+</div>
 {% endblock %}
+    
