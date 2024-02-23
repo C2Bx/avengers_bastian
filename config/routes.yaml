@@ -3,3 +3,15 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+auteurs_plusieurs_livres:
+    path: '/auteurs/plusieurs-livres'
+    controller: 'App\Controller\SomeController::auteursPlusieursLivres'
+
+nombre_livres:
+    path: '/nombre-livres'
+    controller: 'App\Controller\SomeController::nombreLivres'
+
+livre_liste:
+    path: /livres
+    controller: 'App\Controller\LivreController::afficherTable'

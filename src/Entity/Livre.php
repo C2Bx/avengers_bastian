@@ -1,45 +1,39 @@
 <?php
 
+// src/Entity/Livre.php
 namespace App\Entity;
 
-use App\Repository\LivreRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\LivreRepository;
 
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
 class Livre
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string', length: 255)]
     private ?string $titre = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $auteur = null;
+    #[ORM\ManyToOne(targetEntity: Auteur::class, inversedBy: 'livres')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Auteur $auteur = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $annee_parution = null;
+    #[ORM\Column(type: 'date', nullable: true)]
+    private ?\DateTimeInterface $anneeParution = null;
 
-    #[ORM\Column]
-    private ?int $isbn = null;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private ?int $nombrePages = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $resume = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $genre = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $nombre_pages = null;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $isbn = null; // Nouvelle propriété ISBN
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $langue = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $editeur = null;
+    // Getters and setters...
 
     public function getId(): ?int
     {
@@ -51,58 +45,42 @@ class Livre
         return $this->titre;
     }
 
-    public function setTitre(string $titre): static
+    public function setTitre(?string $titre): self
     {
         $this->titre = $titre;
-
         return $this;
     }
 
-    public function getAuteur(): ?string
+    public function getAuteur(): ?Auteur
     {
         return $this->auteur;
     }
 
-    public function setAuteur(string $auteur): static
+    public function setAuteur(?Auteur $auteur): self
     {
         $this->auteur = $auteur;
-
         return $this;
     }
 
     public function getAnneeParution(): ?\DateTimeInterface
     {
-        return $this->annee_parution;
+        return $this->anneeParution;
     }
 
-    public function setAnneeParution(\DateTimeInterface $annee_parution): static
+    public function setAnneeParution(?\DateTimeInterface $anneeParution): self
     {
-        $this->annee_parution = $annee_parution;
-
+        $this->anneeParution = $anneeParution;
         return $this;
     }
 
-    public function getIsbn(): ?int
+    public function getNombrePages(): ?int
     {
-        return $this->isbn;
+        return $this->nombrePages;
     }
 
-    public function setIsbn(int $isbn): static
+    public function setNombrePages(?int $nombrePages): self
     {
-        $this->isbn = $isbn;
-
-        return $this;
-    }
-
-    public function getResume(): ?string
-    {
-        return $this->resume;
-    }
-
-    public function setResume(?string $resume): static
-    {
-        $this->resume = $resume;
-
+        $this->nombrePages = $nombrePages;
         return $this;
     }
 
@@ -111,46 +89,20 @@ class Livre
         return $this->genre;
     }
 
-    public function setGenre(?string $genre): static
+    public function setGenre(?string $genre): self
     {
         $this->genre = $genre;
-
         return $this;
     }
 
-    public function getNombrePages(): ?string
+    public function getIsbn(): ?string
     {
-        return $this->nombre_pages;
+        return $this->isbn;
     }
 
-    public function setNombrePages(?string $nombre_pages): static
+    public function setIsbn(?string $isbn): self
     {
-        $this->nombre_pages = $nombre_pages;
-
-        return $this;
-    }
-
-    public function getLangue(): ?string
-    {
-        return $this->langue;
-    }
-
-    public function setLangue(?string $langue): static
-    {
-        $this->langue = $langue;
-
-        return $this;
-    }
-
-    public function getEditeur(): ?string
-    {
-        return $this->editeur;
-    }
-
-    public function setEditeur(string $editeur): static
-    {
-        $this->editeur = $editeur;
-
+        $this->isbn = $isbn;
         return $this;
     }
 }

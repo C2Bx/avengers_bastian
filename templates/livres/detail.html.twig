@@ -10,8 +10,9 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">{{ livre.titre }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ livre.auteur }}</h6>
-                    <p class="card-text">{{ livre.resume }}</p>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ livre.auteur.nom }} {{ livre.auteur.prenom }}</h6>
+                    <!-- Suppression de la référence à la propriété "resume" -->
+                    <p class="card-text">Description du livre</p>
 
                     <table class="table table-striped">
                         <tbody>
@@ -25,7 +26,7 @@
                             </tr>
                             <tr>
                                 <th scope="row">Auteur</th>
-                                <td>{{ livre.auteur }}</td>
+                                <td>{{ livre.auteur.nom }} {{ livre.auteur.prenom }}</td>
                             </tr>
                             <tr>
                                 <th scope="row">Année de Parution</th>
@@ -33,6 +34,7 @@
                             </tr>
                             <tr>
                                 <th scope="row">ISBN</th>
+                                <!-- Ajout de l'affichage de la propriété "isbn" -->
                                 <td>{{ livre.isbn }}</td>
                             </tr>
                             <tr>
@@ -43,15 +45,7 @@
                                 <th scope="row">Nombre de Pages</th>
                                 <td>{{ livre.nombrePages }}</td>
                             </tr>
-                            <tr>
-                                <th scope="row">Langue</th>
-                                <td>{{ livre.langue }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Éditeur</th>
-                                <td>{{ livre.editeur }}</td>
-                            </tr>
-                            {# Ajoutez ici d'autres informations si nécessaire #}
+                            <!-- Suppression des références aux propriétés "langue" et "editeur" -->
                         </tbody>
                     </table>
                 </div>

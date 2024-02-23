@@ -1,8 +1,12 @@
-{# templates/livres/index.html.twig #}
-
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Livres{% endblock %}
+{% block title %}
+    {% if filter is null %}
+        Liste des Livres
+    {% else %}
+        Liste des Livres commençant par la lettre {{ filter }}
+    {% endif %}
+{% endblock %}
 
 {% block head %}
     {# Assurez-vous que Bootstrap est inclus dans base.html.twig #}
@@ -11,7 +15,34 @@
 
 {% block body %}
 <div class="container mt-5">
-    <h1>Liste des Livres</h1>
+    <div class="row mb-3">
+        <div class="col">
+            <form action="{{ path('livres_index') }}" method="get" class="form-inline">
+                <div class="form-group mr-2">
+                    <select class="form-control" name="auteur">
+                        {% for auteur in auteurs %}
+                            <option value="{{ auteur.id }}">{{ auteur.nom }} {{ auteur.prenom }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-primary">Filtrer par auteur</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <form action="{{ path('livres_index') }}" method="get" class="form-inline">
+                <div class="form-group mr-2">
+                    <select class="form-control" name="filter">
+                        {% for lettre in lettres %}
+                            <option value="{{ lettre }}">{{ lettre }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-primary">Filtrer par lettre</button>
+                </div>
+            </form>
+        </div>
+    </div>
     {% if livres is not empty %}
         <div class="table-responsive">
             <table class="table table-hover">
@@ -30,11 +61,11 @@
                         <tr>
                             <td>{{ livre.id }}</td>
                             <td>{{ livre.titre }}</td>
-                            <td>{{ livre.auteur }}</td>
+                            <td>{{ livre.auteur.nom }} {{ livre.auteur.prenom }}</td>
                             <td>{{ livre.anneeParution|date('Y') }}</td>
                             <td>{{ livre.genre }}</td>
                             <td>
-                                <a href="{{ path('livre_detail', {'id': livre.id}) }}" class="btn btn-sm btn-info">Détails</a>
+                                <a href="{{ path('detail_livre', {'id': livre.id}) }}" class="btn btn-sm btn-info">Détails</a>
                                 {# Ajoutez d'autres actions ici si nécessaire, comme Modifier ou Supprimer #}
                             </td>
                         </tr>
@@ -47,5 +78,8 @@
             Aucun livre trouvé.
         </div>
     {% endif %}
+    <div class="mt-3">
+        <h3>Nombre de livres : {{ nbLivre }}</h3>
+    </div>
 </div>
 {% endblock %}
