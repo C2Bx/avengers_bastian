@@ -1,7 +1,5 @@
 controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
+    resource: '../src/Controller/'
     type: attribute
 
 auteurs_plusieurs_livres:
@@ -12,6 +10,11 @@ nombre_livres:
     path: '/nombre-livres'
     controller: 'App\Controller\SomeController::nombreLivres'
 
+livres_index:
+    path: /livres
+    controller: 'App\Controller\LivreController::index'
+    methods: ['GET']
 livre_liste:
     path: /livres
-    controller: 'App\Controller\LivreController::afficherTable'
+    controller: 'App\Controller\LivreController::index'
+    methods: ['GET']

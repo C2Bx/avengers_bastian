@@ -8,38 +8,54 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Livre;
-use App\Entity\Auteur; 
+use App\Entity\Auteur;
+use App\Repository\AuteurRepository;
 
 class LivreController extends AbstractController
 {
-    #[Route('/livres', name: 'livres_index')]
-    public function afficherTable(Request $request, EntityManagerInterface $entityManager): Response {
-        // Récupérer les valeurs des filtres depuis la requête
-        $auteurId = $request->query->get('auteur');
+    #[Route('/livres', name: 'livres_index', methods: ['GET'])]
+    public function index(Request $request, EntityManagerInterface $entityManager, AuteurRepository $auteurRepository): Response {
+        $auteurs = $auteurRepository->findAll();
         $filter = $request->query->get('filter');
+        $auteurId = $request->query->get('auteurId');
         
-        // Récupérer la liste des livres selon les filtres
+        // Récupérer tous les livres ou les livres filtrés selon le cas
         $livres = $this->getLivresByFilters($entityManager, $auteurId, $filter);
-
-        // Récupérer le nombre total de livres
+        
+        // Compter le nombre total de livres
         $nbLivre = $entityManager->getRepository(Livre::class)->countAllBooks();
         
-        // Récupérer la liste des auteurs pour le formulaire
-        $auteurs = $entityManager->getRepository(Auteur::class)->findAll();
-        
-        // Générer les lettres pour le filtre par lettre
-        $lettres = range('A', 'Z');
+        // Si un auteur est sélectionné, calculer le nombre de livres de cet auteur
+        if ($auteurId) {
+            $selectedAuteur = $auteurRepository->find($auteurId);
+            $nbFilteredLivre = count($selectedAuteur->getLivresByFirstLetter($filter));
+        } else {
+            // Sinon, si un filtre est appliqué, compter les livres filtrés
+            if ($filter) {
+                $nbFilteredLivre = $entityManager->getRepository(Livre::class)->countBooksByFirstLetter($filter);
+            } else {
+                // Sinon, le nombre de livres filtrés est égal au nombre total de livres
+                $nbFilteredLivre = $nbLivre;
+            }
+            $selectedAuteur = null;
+        }
+
+        // Trouver les premières lettres des titres des livres
+        $lettres = $entityManager->getRepository(Livre::class)->findFirstLettersOfTitles();
 
         return $this->render('livres/index.html.twig', [
             'livres' => $livres,
             'nbLivre' => $nbLivre,
             'auteurs' => $auteurs,
             'filter' => $filter,
-            'lettres' => $lettres, // Passer les lettres au modèle Twig
+            'nbFilteredLivre' => $nbFilteredLivre,
+            'selectedAuteur' => $selectedAuteur,
+            'auteurId' => $auteurId,
+            'lettres' => $lettres,
         ]);
     }
 
-    #[Route('/livres/detail/{id}', name: 'detail_livre')]
+    #[Route('/livres/detail/{id}', name: 'detail_livre', methods: ['GET'])]
     public function detail(EntityManagerInterface $entityManager, int $id): Response {
         $livre = $entityManager->getRepository(Livre::class)->find($id);
 
@@ -52,22 +68,21 @@ class LivreController extends AbstractController
         ]);
     }
 
-    // Fonction pour récupérer les livres selon les filtres
     private function getLivresByFilters(EntityManagerInterface $entityManager, $auteurId, $filter) {
-        $livreRepository = $entityManager->getRepository(Livre::class);
-        $criteria = [];
-
-        // Filtrer par auteur si une valeur est fournie
-        if ($auteurId) {
-            $criteria['auteur'] = $auteurId;
+        if ($filter && $auteurId) {
+            // Récupérer les livres de l'auteur sélectionné commençant par la lettre sélectionnée
+            $auteur = $entityManager->getRepository(Auteur::class)->find($auteurId);
+            return $auteur->getLivresByFirstLetter($filter);
+        } elseif ($filter) {
+            // Récupérer les livres commençant par la lettre sélectionnée
+            return $entityManager->getRepository(Livre::class)->findByFirstLetter($filter);
+        } elseif ($auteurId) {
+            // Récupérer tous les livres de l'auteur sélectionné
+            $auteur = $entityManager->getRepository(Auteur::class)->find($auteurId);
+            return $auteur->getLivres();
+        } else {
+            // Récupérer tous les livres si aucun filtre n'est appliqué
+            return $entityManager->getRepository(Livre::class)->findAll();
         }
-
-        // Filtrer par lettre si une valeur est fournie
-        if ($filter) {
-            $criteria['filter'] = $filter;
-        }
-
-        // Récupérer les livres selon les critères
-        return $livreRepository->findBy($criteria);
     }
 }

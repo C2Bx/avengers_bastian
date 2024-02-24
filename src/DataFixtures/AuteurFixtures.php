@@ -1,31 +1,23 @@
 <?php
 
-// AuteurFixtures.php
-
 namespace App\DataFixtures;
 
-use App\Entity\Auteur;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use App\Entity\Auteur;
 
 class AuteurFixtures extends Fixture
 {
-    public function load(ObjectManager $manager): void
+    public function load(ObjectManager $manager)
     {
-        $auteurs = [
-            ['nom' => 'Nom1', 'prenom' => 'Prenom1'],
-            ['nom' => 'Nom2', 'prenom' => 'Prenom2'],
-            ['nom' => 'Nom3', 'prenom' => 'Prenom3'],
-            // Ajoutez autant d'auteurs que nécessaire
-        ];
-
-        foreach ($auteurs as $key => $data) {
+        for ($i = 0; $i < 10; $i++) {
             $auteur = new Auteur();
-            $auteur->setNom($data['nom']);
-            $auteur->setPrenom($data['prenom']);
+            $auteur->setNom('NomAuteur' . $i);
+            $auteur->setPrenom('PrenomAuteur' . $i);
             $manager->persist($auteur);
 
-            $this->addReference('auteur_' . $key, $auteur);
+            // Référencement pour l'utilisation dans d'autres fixtures si nécessaire
+            $this->addReference('auteur_' . $i, $auteur);
         }
 
         $manager->flush();

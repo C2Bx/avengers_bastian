@@ -1,6 +1,5 @@
 <?php
 
-// src/Entity/Livre.php
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -30,10 +29,10 @@ class Livre
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $genre = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $isbn = null; // Nouvelle propriété ISBN
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $isbn = null; // Assurez-vous que ce champ est correctement défini dans vos fixtures
 
-    // Getters and setters...
+
 
     public function getId(): ?int
     {

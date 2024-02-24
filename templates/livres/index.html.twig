@@ -1,85 +1,70 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {% if filter is null %}
-        Liste des Livres
-    {% else %}
-        Liste des Livres commençant par la lettre {{ filter }}
-    {% endif %}
+    {{ filter is null ? 'Liste des Livres' : 'Liste des Livres commençant par la lettre ' ~ filter }}
 {% endblock %}
 
 {% block head %}
-    {# Assurez-vous que Bootstrap est inclus dans base.html.twig #}
-    {# Vous pouvez également inclure des styles personnalisés ici si nécessaire #}
+    {# Assurez-vous que Bootstrap et/ou votre CSS personnalisé est inclus ici #}
 {% endblock %}
 
 {% block body %}
 <div class="container mt-5">
-    <div class="row mb-3">
-        <div class="col">
+    <div class="row mb-4">
+        <div class="col-md-6">
             <form action="{{ path('livres_index') }}" method="get" class="form-inline">
                 <div class="form-group mr-2">
-                    <select class="form-control" name="auteur">
+                    <select class="form-control" name="auteurId" aria-label="Choisir un auteur">
+                        <option value="">Choisir un auteur</option>
                         {% for auteur in auteurs %}
-                            <option value="{{ auteur.id }}">{{ auteur.nom }} {{ auteur.prenom }}</option>
+                            <option value="{{ auteur.id }}" {{ auteur.id == auteurId ? 'selected' : '' }}>{{ auteur.nom }} {{ auteur.prenom }}</option>
                         {% endfor %}
                     </select>
-                    <button type="submit" class="btn btn-primary">Filtrer par auteur</button>
                 </div>
-            </form>
-        </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col">
-            <form action="{{ path('livres_index') }}" method="get" class="form-inline">
                 <div class="form-group mr-2">
-                    <select class="form-control" name="filter">
+                    <select class="form-control" name="filter" aria-label="Filtrer par la première lettre du titre">
+                        <option value="">Filtrer par la première lettre du titre</option>
                         {% for lettre in lettres %}
-                            <option value="{{ lettre }}">{{ lettre }}</option>
+                            <option value="{{ lettre }}" {{ lettre == filter ? 'selected' : '' }}>{{ lettre }}</option>
                         {% endfor %}
                     </select>
-                    <button type="submit" class="btn btn-primary">Filtrer par lettre</button>
                 </div>
+                <button type="submit" class="btn btn-primary">Filtrer</button>
             </form>
         </div>
+        <div class="col-md-6">
+            <p class="text-right">Nombre total de livres : {{ nbLivre }}</p>
+            <p class="text-right">Nombre de livres affichés : {{ nbFilteredLivre }}</p>
+        </div>
     </div>
-    {% if livres is not empty %}
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead class="thead-dark">
+
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Titre</th>
                         <th>Auteur</th>
-                        <th>Année de Parution</th>
+                        <th>Année de parution</th>
+                        <th>Nombre de pages</th>
                         <th>Genre</th>
-                        <th>Actions</th>
+                        <th>ISBN</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for livre in livres %}
                         <tr>
-                            <td>{{ livre.id }}</td>
-                            <td>{{ livre.titre }}</td>
+                            <td><a href="{{ path('detail_livre', {'id': livre.id}) }}">{{ livre.titre }}</a></td>
                             <td>{{ livre.auteur.nom }} {{ livre.auteur.prenom }}</td>
                             <td>{{ livre.anneeParution|date('Y') }}</td>
+                            <td>{{ livre.nombrePages }}</td>
                             <td>{{ livre.genre }}</td>
-                            <td>
-                                <a href="{{ path('detail_livre', {'id': livre.id}) }}" class="btn btn-sm btn-info">Détails</a>
-                                {# Ajoutez d'autres actions ici si nécessaire, comme Modifier ou Supprimer #}
-                            </td>
+                            <td>{{ livre.isbn }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-    {% else %}
-        <div class="alert alert-warning" role="alert">
-            Aucun livre trouvé.
-        </div>
-    {% endif %}
-    <div class="mt-3">
-        <h3>Nombre de livres : {{ nbLivre }}</h3>
     </div>
 </div>
 {% endblock %}
