@@ -36,18 +36,31 @@ class AuteurRepository extends ServiceEntityRepository
      * @param int $number Le nombre minimum de livres qu'un auteur doit avoir.
      * @return Auteur[] Retourne un tableau d'objets Auteur.
      */
-    public function findAuteursWithAtLeastNumberOfBooks(int $number): array
+    public function findAuthorsWithAtLeastNumberOfBooks(int $number): array
     {
-        $entityManager = $this->getEntityManager();
-        $dql = "SELECT a, COUNT(l.id) as HIDDEN nbrLivres
-                FROM App\Entity\Auteur a
-                JOIN a.livres l
-                GROUP BY a.id
-                HAVING COUNT(l.id) > :number";
-        
-        $query = $entityManager->createQuery($dql)
-                    ->setParameter('number', $number);
+        $qb = $this->createQueryBuilder('a');
+        $qb->select('a')
+            ->join('a.livres', 'l')
+            ->groupBy('a.id')
+            ->having('COUNT(l.id) > :number')
+            ->setParameter('number', $number);
 
-        return $query->getResult();
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Retourne le nombre maximal de livres par auteur.
+     * 
+     * @return array Retourne un tableau associatif avec les auteurs et leur nombre de livres.
+     */
+    public function findMaxBooksCountByAuthors(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a as auteur, COUNT(l.id) as nbrLivres')
+            ->join('a.livres', 'l')
+            ->groupBy('a.id')
+            ->orderBy('nbrLivres', 'DESC')
+            ->getQuery()
+            ->getResult();
     }
 }

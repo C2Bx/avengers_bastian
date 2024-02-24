@@ -2,30 +2,30 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Livre;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use App\Entity\Livre;
+use App\Entity\Auteur;
+use Faker\Factory;
 
-class LivreFixtures extends Fixture implements DependentFixtureInterface
+class LivreFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $lettres = range('A', 'Z');
+        $faker = Factory::create('fr_FR');
 
-        // Créer des livres avec des auteurs différents
-        for ($i = 0; $i < 10; $i++) {
-            // Récupérer une référence d'auteur différente pour chaque livre
-            $auteur = $this->getReference('auteur_' . $i);
+        $auteurs = $manager->getRepository(Auteur::class)->findAll();
 
-            foreach ($lettres as $lettre) {
+        foreach ($auteurs as $auteur) {
+            $nombreLivres = rand(1, 10); 
+            for ($i = 0; $i < $nombreLivres; $i++) {
                 $livre = new Livre();
-                $livre->setTitre($lettre . ' Livre ' . $i); // Ajouter la lettre au titre du livre
+                $livre->setTitre($faker->sentence());
                 $livre->setAuteur($auteur);
-                $livre->setAnneeParution(new \DateTime('now'));
-                $livre->setNombrePages(100 + $i);
-                $livre->setGenre('Genre ' . $i);
-                $livre->setIsbn('978-3-16-148410-' . $i);
+                $livre->setAnneeParution($faker->dateTimeThisCentury);
+                $livre->setNombrePages($faker->numberBetween(50, 1000));
+                $livre->setGenre($faker->word);
+                $livre->setIsbn($faker->isbn13);
                 $manager->persist($livre);
             }
         }

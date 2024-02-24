@@ -7,13 +7,13 @@
 {% block head %}
     {{ parent() }}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}"> <!-- Votre CSS personnalisé -->
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 {% endblock %}
 
 {% block body %}
 <div class="container mt-5">
     <div class="row mb-4">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <form action="{{ path('livres_index') }}" method="get" class="form-inline">
                 <div class="form-group mr-2">
                     <select class="form-control" name="auteurId" aria-label="Choisir un auteur">
@@ -31,17 +31,28 @@
                         {% endfor %}
                     </select>
                 </div>
+                <div class="form-group mr-2">
+                    <select class="form-control" name="minLivres" aria-label="Nombre minimum de livres">
+                        <option value="">Sélectionnez le nombre minimum de livres pris au supérieur</option>
+                        {% for option in bookCountOptions %}
+                            <option value="{{ option }}" {{ option == minLivres ? 'selected' : '' }}>{{ option }} livre(s)</option>
+                        {% endfor %}
+                    </select>
+                </div>
                 <button type="submit" class="btn btn-primary">Filtrer</button>
             </form>
         </div>
-        <div class="col-md-6 text-right">
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
             <p>Nombre total de livres : {{ nbLivre }}</p>
             <p>Nombre de livres affichés : {{ nbFilteredLivre }}</p>
         </div>
     </div>
 
     <div class="row">
-        <div class="col">
+        <div class="col-md-12">
             <div class="table-responsive">
                 <table class="table">
                     <thead>
