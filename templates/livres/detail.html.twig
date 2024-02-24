@@ -2,55 +2,58 @@
 
 {% block title %}Détails du Livre{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Assurez-vous que le chemin d'accès à votre CSS est correct -->
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+{% endblock %}
+
 {% block body %}
-    <div class="container mt-5">
-        <h1 class="mb-4">Détails du Livre</h1>
+<div class="container mt-5">
+    <h1 class="mb-4">Détails du Livre</h1>
 
-        <section>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">{{ livre.titre }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">{{ livre.auteur.nom }} {{ livre.auteur.prenom }}</h6>
-                    <!-- Suppression de la référence à la propriété "resume" -->
-                    <p class="card-text">Description du livre</p>
+    <section>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ livre.titre }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ livre.auteur.nom }} {{ livre.auteur.prenom }}</h6>
+                <p class="card-text">Description du livre</p>
 
-                    <table class="table table-striped">
-                        <tbody>
-                            <tr>
-                                <th scope="row">ID</th>
-                                <td>{{ livre.id }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Titre</th>
-                                <td>{{ livre.titre }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Auteur</th>
-                                <td>{{ livre.auteur.nom }} {{ livre.auteur.prenom }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Année de Parution</th>
-                                <td>{{ livre.anneeParution|date('Y') }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">ISBN</th>
-                                <!-- Ajout de l'affichage de la propriété "isbn" -->
-                                <td>{{ livre.isbn }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Genre</th>
-                                <td>{{ livre.genre }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Nombre de Pages</th>
-                                <td>{{ livre.nombrePages }}</td>
-                            </tr>
-                            <!-- Suppression des références aux propriétés "langue" et "editeur" -->
-                        </tbody>
-                    </table>
-                </div>
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th scope="row">ID</th>
+                            <td>{{ livre.id }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Titre</th>
+                            <td>{{ livre.titre }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Auteur</th>
+                            <td>{{ livre.auteur.nom }} {{ livre.auteur.prenom }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Année de Parution</th>
+                            <td>{{ livre.anneeParution|date('Y') }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">ISBN</th>
+                            <td>{{ livre.isbn }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Genre</th>
+                            <td>{{ livre.genre }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Nombre de Pages</th>
+                            <td>{{ livre.nombrePages }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </section>
-        <a href="{{ path('livre_liste') }}" class="btn btn-primary">Retour à la liste</a>
-    </div>
+        </div>
+    </section>
+    <a href="{{ path('livre_liste') }}" class="btn btn-primary">Retour à la liste</a>
+</div>
 {% endblock %}

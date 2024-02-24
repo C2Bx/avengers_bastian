@@ -5,7 +5,9 @@
 {% endblock %}
 
 {% block head %}
-    {# Assurez-vous que Bootstrap et/ou votre CSS personnalisé est inclus ici #}
+    {{ parent() }}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}"> <!-- Votre CSS personnalisé -->
 {% endblock %}
 
 {% block body %}
@@ -32,38 +34,40 @@
                 <button type="submit" class="btn btn-primary">Filtrer</button>
             </form>
         </div>
-        <div class="col-md-6">
-            <p class="text-right">Nombre total de livres : {{ nbLivre }}</p>
-            <p class="text-right">Nombre de livres affichés : {{ nbFilteredLivre }}</p>
+        <div class="col-md-6 text-right">
+            <p>Nombre total de livres : {{ nbLivre }}</p>
+            <p>Nombre de livres affichés : {{ nbFilteredLivre }}</p>
         </div>
     </div>
 
     <div class="row">
         <div class="col">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Titre</th>
-                        <th>Auteur</th>
-                        <th>Année de parution</th>
-                        <th>Nombre de pages</th>
-                        <th>Genre</th>
-                        <th>ISBN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for livre in livres %}
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td><a href="{{ path('detail_livre', {'id': livre.id}) }}">{{ livre.titre }}</a></td>
-                            <td>{{ livre.auteur.nom }} {{ livre.auteur.prenom }}</td>
-                            <td>{{ livre.anneeParution|date('Y') }}</td>
-                            <td>{{ livre.nombrePages }}</td>
-                            <td>{{ livre.genre }}</td>
-                            <td>{{ livre.isbn }}</td>
+                            <th>Titre</th>
+                            <th>Auteur</th>
+                            <th>Année de parution</th>
+                            <th>Nombre de pages</th>
+                            <th>Genre</th>
+                            <th>ISBN</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for livre in livres %}
+                            <tr>
+                                <td><a href="{{ path('detail_livre', {'id': livre.id}) }}">{{ livre.titre }}</a></td>
+                                <td>{{ livre.auteur.nom }} {{ livre.auteur.prenom }}</td>
+                                <td>{{ livre.anneeParution|date('Y') }}</td>
+                                <td>{{ livre.nombrePages }}</td>
+                                <td>{{ livre.genre }}</td>
+                                <td>{{ livre.isbn }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

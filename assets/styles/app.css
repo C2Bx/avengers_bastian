@@ -1,20 +1,22 @@
 body {
     background-color: #fff;
 }
+
 body * {
-    font-family: "Comic Sans MS";
-}
-table{
-    border: 3px solid black;
-}
-table *{
-    border: 2px solid #000;
-    padding: 5px;
-}
-thead th{
-    background-color: #00aaff;
+    font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
+table {
+    border: 3px solid black;
+    width: 100%; /* Assurez-vous que la table utilise toute la largeur disponible */
+    border-collapse: collapse; /* Pour que les bordures soient bien collées */
+}
+
+table * {
+    border: 2px solid #000;
+    padding: 5px;
+    text-align: left; /* Alignez le texte à gauche pour une meilleure lisibilité */
+}
 
 .table-custom {
     border-collapse: separate;
@@ -22,7 +24,7 @@ thead th{
 }
 
 .table-custom thead th {
-    background-color: #007BFF;
+    background-color: #212529;
     color: white;
 }
 
@@ -33,7 +35,7 @@ thead th{
 
 .table-custom td, .table-custom th {
     vertical-align: middle;
-    margin-bottom: 10px;
+    padding: 10px; /* Un peu plus d'espace pour la respiration */
     border: none;
 }
 
@@ -49,10 +51,32 @@ thead th{
     border-bottom-right-radius: 10px;
 }
 
+.btn-custom {
+    background-color: #212529; /* Couleur de fond du bouton */
+    color: white; /* Couleur du texte */
+    border: none; /* Pas de bordure */
+    padding: 10px 20px; /* Padding horizontal et vertical */
+    border-radius: 5px; /* Arrondi des coins */
+    transition: background-color 0.3s; /* Transition pour l'interaction */  
+}
+
+.btn-custom:hover {
+    background-color: #1a1e21; /* Couleur de fond au survol */
+}
+
 .alert-custom {
     background-color: #f8d7da;
     color: #721c24;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #f5c6cb;
+}
+
+.form-control{
+    margin-bottom: 1rem;
+}
+
+a{
+    margin-bottom: 1rem;
+    margin-top: 1rem;
 }

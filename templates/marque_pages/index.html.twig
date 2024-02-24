@@ -1,42 +1,45 @@
+
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Marque pages{% endblock %}
 
-{% block head %}
-    
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/custom.css') }}">
 {% endblock %}
 
 {% block body %}
-    <div class="container mt-5">
-        {% if marque_pages is not empty %}
-            <div class="table-responsive">
-                <table class="table table-custom">
-                    <thead>
+<div class="container mt-5">
+    {% if marque_pages is not empty %}
+        <div class="table-responsive">
+            <table class="table table-custom">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Commentaire</th>
+                        <th>Détails du marque page</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mpr in marque_pages %}
                         <tr>
-                            <th>ID</th>
-                            <th>Nom</th>
-                            <th>Commentaire</th>
-                            <th>Détails du marque page</th>
+                            <td>{{ mpr.id }}</td>
+                            <td>{{ mpr.url }}</td>
+                            <td>{{ mpr.commentaire }}</td>
+                            <td>
+                                <a class="btn btn-info btn-grow" href="details/{{ mpr.id }}">Détails</a>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {% for mpr in marque_pages %}
-                            <tr>
-                                <td>{{ mpr.id }}</td>
-                                <td>{{ mpr.url }}</td>
-                                <td>{{ mpr.commentaire }}</td>
-                                <td>
-                                    <a class="btn btn-info" href="details/{{ mpr.id }}">Détails</a>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% else %}
-            <div class="alert alert-info alert-custom" role="alert">
-                Aucun marque-page trouvé.
-            </div>
-        {% endif %}
-    </div>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info alert-custom" role="alert">
+            Aucun marque-page trouvé.
+        </div>
+    {% endif %}
+</div>
 {% endblock %}
