@@ -11,10 +11,20 @@
                 <div class="mb-3">
                     {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
                     {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.nom) %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form_errors(form.nom) }}
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="mb-3">
                     {{ form_label(form.prenom, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
                     {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.prenom) %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form_errors(form.prenom) }}
+                        </div>
+                    {% endif %}
                 </div>
                 <button type="submit" class="btn btn-secondary">Ajouter</button>
                 <a href="{{ path('app_auteur') }}" class="btn btn-primary">Retour à la liste</a>
@@ -22,5 +32,4 @@
             </div>
         </div>
     </div>
-    
 {% endblock %}

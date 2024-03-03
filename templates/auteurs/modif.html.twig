@@ -1,22 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-Modifier {% if auteur is defined %}l'auteur {{ auteur.nom }}{% else %}le livre {{ livre.titre }}{% endif %}
-{% endblock %}
+{% block title %}Ajouter un nouvel auteur{% endblock %}
 
 {% block body %}
-<div class="container mt-4">
-    <h1>Modifier {% if auteur is defined %}l'auteur {{ auteur.nom }}{% else %}le livre {{ livre.titre }}{% endif %}</h1>
-    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
-        {{ form_widget(form) }}
-        <div class="form-group mt-3">
-            <button type="submit" class="btn btn-primary">Modifier</button>
-            {% if auteur is defined %}
-                <a href="{{ path('app_auteur') }}" class="btn btn-secondary">Retour</a>
-            {% else %}
-                <a href="{{ path('app_livre') }}" class="btn btn-secondary">Retour</a>
-            {% endif %}
+    <div class="container">
+        <h1 class="mt-5">Ajouter un nouvel auteur</h1>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                {{ form_start(form) }}
+                <div class="mb-3">
+                    {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.nom) %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form_errors(form.nom) }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.prenom, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+                    {% if form_errors(form.prenom) %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ form_errors(form.prenom) }}
+                        </div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-secondary">Modifier</button>
+                <a href="{{ path('app_auteur') }}" class="btn btn-primary">Retour à la liste</a>
+                {{ form_end(form) }}
+            </div>
         </div>
-    {{ form_end(form) }}
-</div>
+    </div>
 {% endblock %}
