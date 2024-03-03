@@ -13,7 +13,6 @@ class LivreRepository extends ServiceEntityRepository
         parent::__construct($registry, Livre::class);
     }
 
-    // Méthode pour compter le nombre total de livres
     public function countAllBooks(): int
     {
         $entityManager = $this->getEntityManager();
@@ -25,7 +24,6 @@ class LivreRepository extends ServiceEntityRepository
         return (int) $query->getSingleScalarResult();
     }
 
-    // Méthode pour trouver les premières lettres des titres des livres
     public function findFirstLettersOfTitles()
     {
         $entityManager = $this->getEntityManager();
@@ -38,7 +36,6 @@ class LivreRepository extends ServiceEntityRepository
         return array_column($query->getResult(), 'lettre');
     }
 
-    // Méthode pour filtrer les livres par la première lettre du titre
     public function findByFirstLetter($letter)
     {
         $entityManager = $this->getEntityManager();
@@ -52,7 +49,7 @@ class LivreRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    // Méthode pour compter le nombre de livres commençant par une certaine lettre
+    
     public function countBooksByFirstLetter(string $letter): int
     {
         $qb = $this->createQueryBuilder('l');
@@ -61,44 +58,5 @@ class LivreRepository extends ServiceEntityRepository
         $qb->setParameter('letter', $letter);
 
         return (int) $qb->getQuery()->getSingleScalarResult();
-    }
-
-    // Méthode pour compter le nombre total d'auteurs
-    public function countAllAuthors(): int
-    {
-        $entityManager = $this->getEntityManager();
-        $query = $entityManager->createQuery(
-            'SELECT COUNT(a.id) as authorCount
-            FROM App\Entity\Auteur a'
-        );
-
-        return (int) $query->getSingleScalarResult();
-    }
-
-    // Méthode pour trouver les premières lettres des noms des auteurs
-    public function findFirstLettersOfAuthors()
-    {
-        $entityManager = $this->getEntityManager();
-        $query = $entityManager->createQuery(
-            'SELECT DISTINCT SUBSTRING(a.nom, 1, 1) as lettre
-            FROM App\Entity\Auteur a
-            ORDER BY lettre ASC'
-        );
-
-        return array_column($query->getResult(), 'lettre');
-    }
-
-    // Méthode pour filtrer les auteurs par la première lettre de leur nom
-    public function findAuthorsByFirstLetter($letter)
-    {
-        $entityManager = $this->getEntityManager();
-        $query = $entityManager->createQuery(
-            'SELECT a
-            FROM App\Entity\Auteur a
-            WHERE a.nom LIKE :letter
-            ORDER BY a.nom ASC'
-        )->setParameter('letter', $letter.'%');
-
-        return $query->getResult();
     }
 }

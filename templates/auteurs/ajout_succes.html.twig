@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Succès{% endblock %}
+
+{% block body %}
+    {% if auteurAjoute %}
+        <h1>Auteur ajouté avec succès !</h1>
+        <p>Merci d'avoir ajouté un auteur.</p>
+    {% elseif auteurModifie %}
+        <h1>Auteur modifié avec succès !</h1>
+        <p>Merci d'avoir modifié un auteur.</p>
+    {% endif %}
+    <a href="{{ retour_url }}">Retour à la liste des auteurs</a>
+{% endblock %}

@@ -22,6 +22,15 @@
             background-color: #1a1e21 !important; /* Couleur de fond du bouton au survol */
             border-color: #1a1e21 !important; /* Couleur de la bordure du bouton au survol */
         }
+
+        /* Faites en sorte que le pied de page reste en bas de la page */
+        html, body {
+            height: 100%;
+        }
+
+        .container {
+            min-height: calc(100% - 100px); /* 100px est la hauteur du pied de page */
+        }
     </style>
     {% block stylesheets %}{% endblock %}
 </head>
@@ -32,6 +41,7 @@
             <a class="navbar-brand" href="#">
                 <img src="{{ asset('img/logo.png') }}" alt="Logo" width="30" height="30" class="d-inline-block align-top">
             </a>
+            <h1 style="color: white;">Symfony dans tous ses états !</h1>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -40,8 +50,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/marque-pages">Marque-pages</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/livres">Livres</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Livres & Auteurs
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/livres">Livres</a></li>
+                            <li><a class="dropdown-item" href="/auteurs">Auteurs</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -63,7 +79,7 @@
     </div>
 
     <!-- Pied de page -->
-    <footer class="footer mt-auto py-4 bg-dark text-white">
+    <footer class="footer py-4 bg-dark text-white">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">

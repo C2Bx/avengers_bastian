@@ -24,15 +24,15 @@ class Livre
     private ?\DateTimeInterface $anneeParution = null;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    private ?int $nombrePages = null;
+    private ?int $nombrePages = null; 
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $genre = null;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private ?string $isbn = null; // Assurez-vous que ce champ est correctement défini dans vos fixtures
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $isbn = null;
 
-
+    // Getters et setters
 
     public function getId(): ?int
     {

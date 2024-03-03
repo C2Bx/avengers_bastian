@@ -1,13 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ filter is null ? 'Liste des Livres' : 'Liste des Livres commençant par la lettre ' ~ filter }}
+    {{ filter is defined and filter is not null ? 'Liste des Livres commençant par la lettre ' ~ filter : 'Liste des Livres' }}
 {% endblock %}
 
 {% block head %}
     {{ parent() }}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -39,7 +38,14 @@
                         {% endfor %}
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Filtrer</button>
+                <div class="form-group mr-2">
+                    <select class="form-control" name="sortOrder" aria-label="Trier par ordre">
+                        <option value="asc" {{ 'asc' == sortOrder ? 'selected' : '' }}>Croissant</option>
+                        <option value="desc" {{ 'desc' == sortOrder ? 'selected' : '' }}>Décroissant</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mr-2">Filtrer</button>
+                <a href="{{ path('livre_ajout') }}" class="btn btn-secondary">Ajouter un livre</a>
             </form>
         </div>
     </div>
@@ -63,18 +69,53 @@
                             <th>Nombre de pages</th>
                             <th>Genre</th>
                             <th>ISBN</th>
-                        </tr>
+                            <th>Action</th> 
                     </thead>
                     <tbody>
                         {% for livre in livres %}
                             <tr>
-                                <td><a href="{{ path('detail_livre', {'id': livre.id}) }}">{{ livre.titre }}</a></td>
-                                <td>{{ livre.auteur.nom }} {{ livre.auteur.prenom }}</td>
-                                <td>{{ livre.anneeParution|date('Y') }}</td>
-                                <td>{{ livre.nombrePages }}</td>
-                                <td>{{ livre.genre }}</td>
-                                <td>{{ livre.isbn }}</td>
+                                <td>{{ livre.titre }}</td>
+                                <td>
+                                    {% if livre.auteur is not null %}
+                                        {{ livre.auteur.nom }} {{ livre.auteur.prenom }}
+                                    {% else %}
+                                        Auteur inconnu
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if livre.anneeParution is not null %}
+                                        {{ livre.anneeParution|date('Y') }}
+                                    {% else %}
+                                        Année de parution inconnue
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if livre.nombrePages is not null %}
+                                        {{ livre.nombrePages }}
+                                    {% else %}
+                                        Nombre de pages inconnu
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if livre.genre is not null %}
+                                        {{ livre.genre }}
+                                    {% else %}
+                                        Genre inconnu
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if livre.isbn is not null %}
+                                        {{ livre.isbn }}
+                                    {% else %}
+                                        ISBN inconnu
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ path('detail_livre', {'id': livre.id}) }}" class="btn btn-secondary">Détails</a>
+                                </td>
                             </tr>
+                        {% else %}
+                            <tr><td colspan="7">Aucun livre trouvé.</td></tr>
                         {% endfor %}
                     </tbody>
                 </table>

@@ -1,7 +1,5 @@
 <?php
 
-// MotsClesFixtures.php
-
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -15,12 +13,15 @@ class MotsClesFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
 
-        for ($i = 0; $i < 25; $i++) {
-            $motsCles = new MotsCles();
-            $motsCles->setMotCle($faker->word);
-            $manager->persist($motsCles);
+        $motsCles = ['Technologie', 'Actualités', 'Sport', 'Cuisine', 'Voyage', 'Musique', 'Art', 'Cinéma', 'Science', 'Politique'];
+
+        foreach ($motsCles as $motCle) {
+            $motCleObj = new MotsCles();
+            $motCleObj->setMotCle($motCle);
+            $manager->persist($motCleObj);
         }
 
         $manager->flush();
     }
 }
+

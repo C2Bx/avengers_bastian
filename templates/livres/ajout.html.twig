@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ mode == 'ajouter' ? 'Ajouter un livre' : 'Modifier un livre' }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-5">{{ mode == 'ajouter' ? 'Ajouter un livre' : 'Modifier un livre' }}</h1>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                {{ form_start(form) }}
+                
+                <div class="mb-3">
+                    {{ form_label(form.titre, 'Titre', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form_label(form.anneeParution, 'Année de parution', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.anneeParution, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form_label(form.nombrePages, 'Nombre de pages', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.nombrePages, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                
+                
+                {% if mode == 'ajouter' %}
+                    <button type="submit" class="btn btn-secondary">Ajouter</button>
+                {% else %}
+                    <button type="submit" class="btn btn-secondary">Modifier</button>
+                {% endif %}
+                
+                <a href="{{ path('livre_liste') }}" class="btn btn-primary">Retour à la liste</a>
+                
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

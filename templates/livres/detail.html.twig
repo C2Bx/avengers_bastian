@@ -4,8 +4,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <!-- Assurez-vous que le chemin d'accès à votre CSS est correct -->
-    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -15,39 +14,41 @@
     <section>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">{{ livre.titre }}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{ livre.auteur.nom }} {{ livre.auteur.prenom }}</h6>
+                <h5 class="card-title">{{ livre.titre|default('Titre inconnu') }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    {{ livre.auteur.nom|default('Auteur inconnu') }} {{ livre.auteur.prenom|default('Prénom inconnu') }}
+                </h6>
                 <p class="card-text">Description du livre</p>
 
                 <table class="table">
                     <tbody>
                         <tr>
                             <th scope="row">ID</th>
-                            <td>{{ livre.id }}</td>
+                            <td>{{ livre.id|default('ID inconnu') }}</td>
                         </tr>
                         <tr>
                             <th scope="row">Titre</th>
-                            <td>{{ livre.titre }}</td>
+                            <td>{{ livre.titre|default('Titre inconnu') }}</td>
                         </tr>
                         <tr>
                             <th scope="row">Auteur</th>
-                            <td>{{ livre.auteur.nom }} {{ livre.auteur.prenom }}</td>
+                            <td>{{ livre.auteur.nom|default('Auteur inconnu') }} {{ livre.auteur.prenom|default('Prénom inconnu') }}</td>
                         </tr>
                         <tr>
                             <th scope="row">Année de Parution</th>
-                            <td>{{ livre.anneeParution|date('Y') }}</td>
+                            <td>{{ livre.anneeParution ? livre.anneeParution|date('Y') : 'Année de parution inconnue' }}</td>
                         </tr>
                         <tr>
                             <th scope="row">ISBN</th>
-                            <td>{{ livre.isbn }}</td>
+                            <td>{{ livre.isbn|default('ISBN inconnu') }}</td>
                         </tr>
                         <tr>
                             <th scope="row">Genre</th>
-                            <td>{{ livre.genre }}</td>
+                            <td>{{ livre.genre|default('Genre inconnu') }}</td>
                         </tr>
                         <tr>
                             <th scope="row">Nombre de Pages</th>
-                            <td>{{ livre.nombrePages }}</td>
+                            <td>{{ livre.nombrePages|default('Nombre de pages inconnu') }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -55,5 +56,7 @@
         </div>
     </section>
     <a href="{{ path('livre_liste') }}" class="btn btn-primary">Retour à la liste</a>
+
+    <a href="{{ path('livre_modif', {'id': livre.id}) }}" class="btn btn-secondary">Modifier</a>
 </div>
 {% endblock %}

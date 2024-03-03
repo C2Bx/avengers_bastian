@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un nouvel auteur{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="mt-5">Ajouter un nouvel auteur</h1>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                {{ form_start(form) }}
+                <div class="mb-3">
+                    {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="mb-3">
+                    {{ form_label(form.prenom, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <button type="submit" class="btn btn-secondary">Ajouter</button>
+                <a href="{{ path('app_auteur') }}" class="btn btn-primary">Retour à la liste</a>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    
+{% endblock %}

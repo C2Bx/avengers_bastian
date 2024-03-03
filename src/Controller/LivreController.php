@@ -7,42 +7,67 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\Livre;
 use App\Repository\AuteurRepository;
+use App\Repository\LivreRepository;
+use App\Entity\Livre;
+use App\Entity\Auteur;
+use App\Form\Type\LivreType;
 
 class LivreController extends AbstractController
 {
     #[Route('/livres', name: 'livres_index', methods: ['GET'])]
-    public function index(Request $request, EntityManagerInterface $entityManager, AuteurRepository $auteurRepository): Response {
+    public function index(Request $request, EntityManagerInterface $entityManager, AuteurRepository $auteurRepository, LivreRepository $livreRepository): Response
+    {
         $filter = $request->query->get('filter');
-        $auteurId = $request->query->get('auteurId');
-        $minLivres = $request->query->get('minLivres');
-        
-        // Récupérer les auteurs selon le filtre minLivres
-        if ($minLivres) {
-            // Récupérer les auteurs ayant publié plus de livres que le nombre spécifié
-            $auteurs = $auteurRepository->findAuthorsWithAtLeastNumberOfBooks((int)$minLivres);
-        } else {
-            // Si aucun filtre n'est spécifié, récupérer tous les auteurs
-            $auteurs = $auteurRepository->findAll();
+        $auteurId = $request->query->getInt('auteurId');
+        $minLivres = $request->query->getInt('minLivres');
+        $sortBy = $request->query->get('sortBy', 'titre');
+        $sortOrder = $request->query->get('sortOrder', 'asc');
+        $firstLetter = $request->query->get('firstLetter');
+
+        $livres = $livreRepository->findAll();
+
+        if ($auteurId) {
+            $auteur = $auteurRepository->find($auteurId);
+            $livres = array_filter($livres, function ($livre) use ($auteur) {
+                return $livre->getAuteur() === $auteur;
+            });
         }
 
-        // Récupérer les livres selon les filtres
-        $livres = $this->getLivresByFilters($entityManager, $auteurId, $filter, $auteurs);
+        if ($filter && $firstLetter) {
+            $livres = $livreRepository->findByFirstLetter($firstLetter);
+        } elseif ($filter) {
+            $livres = array_filter($livres, function ($livre) use ($filter) {
+                return stripos($livre->getTitre(), $filter) === 0;
+            });
+        }
 
-        // Récupérer le nombre total de livres
-        $nbLivre = $entityManager->getRepository(Livre::class)->countAllBooks();
-        
-        // Récupérer le nombre de livres affichés
+        if ($minLivres) {
+            $livres = array_filter($livres, function ($livre) use ($minLivres) {
+                $auteur = $livre->getAuteur();
+                if ($auteur !== null) {
+                    return count($auteur->getLivres()) > $minLivres;
+                }
+                return false;
+            });
+        }
+
+        usort($livres, function ($a, $b) use ($sortBy, $sortOrder) {
+            $method = 'get' . ucfirst($sortBy);
+            $aValue = $a->$method();
+            $bValue = $b->$method();
+            if ($sortOrder === 'asc') {
+                return $aValue <=> $bValue;
+            } else {
+                return $bValue <=> $aValue;
+            }
+        });
+
         $nbFilteredLivre = count($livres);
-        
-        // Récupérer l'auteur sélectionné
+        $auteurs = $auteurRepository->findAll();
+        $nbLivre = $livreRepository->countAllBooks();
         $selectedAuteur = $auteurId ? $auteurRepository->find($auteurId) : null;
-
-        // Récupérer les premières lettres des titres des livres
-        $lettres = $entityManager->getRepository(Livre::class)->findFirstLettersOfTitles();
-
-        // Générer les options pour le filtre minLivres
+        $lettres = $livreRepository->findFirstLettersOfTitles();
         $maxBooksCounts = $auteurRepository->findMaxBooksCountByAuthors();
         $maxBooks = max(array_column($maxBooksCounts, 'nbrLivres'));
         $bookCountOptions = range(1, $maxBooks > 0 ? $maxBooks - 1 : 0);
@@ -58,15 +83,17 @@ class LivreController extends AbstractController
             'minLivres' => $minLivres,
             'lettres' => $lettres,
             'bookCountOptions' => $bookCountOptions,
+            'sortOrder' => $sortOrder,
         ]);
     }
 
     #[Route('/livres/detail/{id}', name: 'detail_livre', methods: ['GET'])]
-    public function detail(EntityManagerInterface $entityManager, int $id): Response {
+    public function detail(EntityManagerInterface $entityManager, int $id): Response
+    {
         $livre = $entityManager->getRepository(Livre::class)->find($id);
 
         if (!$livre) {
-            throw $this->createNotFoundException("Le livre demandé n'existe pas");
+            throw $this->createNotFoundException("Le livre demandé n'existe pas.");
         }
 
         return $this->render('livres/detail.html.twig', [
@@ -74,23 +101,68 @@ class LivreController extends AbstractController
         ]);
     }
 
-    private function getLivresByFilters(EntityManagerInterface $entityManager, $auteurId, $filter, $auteurs) {
-        $queryBuilder = $entityManager->getRepository(Livre::class)->createQueryBuilder('l');
-        
-        if ($filter) {
-            $queryBuilder->andWhere('l.titre LIKE :filter')
-                         ->setParameter('filter', $filter.'%');
+    #[Route('/livres/ajout', name: 'livre_ajout')]
+    public function ajout(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $livre = new Livre();
+        $form = $this->createForm(LivreType::class, $livre);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $auteur = $livre->getAuteur();
+            $entityManager->persist($livre);
+            $entityManager->flush();
+
+           
+            return $this->redirectToRoute('livre_ajout_succes', ['ajout' => true]);
         }
 
-        if ($auteurId) {
-            $queryBuilder->andWhere('l.auteur = :auteurId')
-                         ->setParameter('auteurId', $auteurId);
-        } elseif ($auteurs) {
-            $auteursIds = array_map(function($auteur) { return $auteur->getId(); }, $auteurs);
-            $queryBuilder->andWhere('l.auteur IN (:auteursIds)')
-                         ->setParameter('auteursIds', $auteursIds);
+        return $this->render('livres/ajout.html.twig', [
+            'form' => $form->createView(),
+            'mode' => 'ajouter',
+        ]);
+    }
+
+    #[Route("/livre/modifier/{id}", name: "modifier_livre")]
+    public function modifierLivre(Request $request, EntityManagerInterface $entityManager, $id): Response
+    {
+        $livre = $entityManager->getRepository(Livre::class)->find($id);
+
+        if (!$livre) {
+            throw $this->createNotFoundException("Le livre avec l'ID $id n'existe pas.");
         }
 
-        return $queryBuilder->getQuery()->getResult();
+        $form = $this->createForm(LivreType::class, $livre);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+           
+            return $this->redirectToRoute('livre_ajout_succes', ['modification' => true]);
+        }
+
+        return $this->render('livres/ajout.html.twig', [
+            'form' => $form->createView(),
+            'mode' => 'modifier',
+        ]);
+    }
+
+    #[Route('/livres/ajout_succes', name: 'livre_ajout_succes')]
+    public function ajoutSucces(Request $request): Response
+    {
+       
+        $livreAjoute = $request->query->get('ajout');
+        $livreModifie = $request->query->get('modification');
+
+      
+        $message = $livreAjoute ? "Livre ajouté avec succès ! Merci d'avoir ajouté un livre." : "Livre modifié avec succès ! Merci d'avoir modifié un livre.";
+
+        return $this->render('livres/ajout_succes.html.twig', [
+            'message' => $message,
+            'retour_url' => $this->generateUrl('livres_index'),
+            'livreAjoute' => $livreAjoute, 
+            'livreModifie' => $livreModifie, 
+        ]);
     }
 }

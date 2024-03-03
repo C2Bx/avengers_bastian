@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Auteurs{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <form action="{{ path('app_auteur') }}" method="get" class="form-inline">
+                <div class="form-group mr-2">
+                    <select class="form-control" name="auteurId" aria-label="Choisir un auteur">
+                        <option value="">Choisir un auteur</option>
+                        {% for auteur in tousLesAuteurs %}
+                            <option value="{{ auteur.id }}" {{ auteur.id == auteurId ? 'selected' : '' }}>{{ auteur.nom }} {{ auteur.prenom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group mr-2">
+                    <select class="form-control" name="sortOrder" aria-label="Trier par ordre">
+                        <option value="asc" {{ 'asc' == sortOrder ? 'selected' : '' }}>Croissant</option>
+                        <option value="desc" {{ 'desc' == sortOrder ? 'selected' : '' }}>Décroissant</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mr-2">Filtrer</button>
+                <a href="{{ path('auteur_ajout') }}" class="btn btn-secondary">Ajouter un auteur</a>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for auteur in auteurs %}
+                            <tr>
+                                <td>{{ auteur.nom }}</td>
+                                <td>{{ auteur.prenom }}</td>
+                                <td>
+                                    <a href="{{ path('auteur_modif', {'id': auteur.id}) }}" class="btn btn-secondary">Modifier</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3">Aucun auteur trouvé.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

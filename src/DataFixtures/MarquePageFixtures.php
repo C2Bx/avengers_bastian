@@ -1,49 +1,39 @@
 <?php
 
-// MarquePageFixtures.php
-
 namespace App\DataFixtures;
 
 use App\Entity\MarquePage;
 use App\Entity\MotsCles;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Factory;
 
 class MarquePageFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        // Création de 25 mots-clés différents
-        for ($i = 1; $i <= 25; $i++) {
-            $motCle = new MotsCles();
-            $motCle->setMotCle("Mot-clé $i");
-            $manager->persist($motCle);
-            // Ajouter une référence pour chaque mot-clé
-            $this->addReference('mot_cle_'.$i, $motCle);
-        }
+        $faker = Factory::create('fr_FR');
 
-        // Création de marque-pages avec 2 à 5 mots-clés aléatoires associés
+      
         for ($j = 1; $j <= 10; $j++) {
             $marquePage = new MarquePage();
-            $marquePage->setUrl("https://exemple.com/page$j");
-            $marquePage->setDateCreation(new \DateTime());
-            $marquePage->setCommentaire("Commentaire pour la page $j"); // Correction ici
-
-            // Sélection aléatoire de 2 à 5 mots-clés
-            $randomMotsCles = [];
-            $nbMotsCles = rand(2, 5);
-            for ($k = 1; $k <= $nbMotsCles; $k++) {
-                // Choix aléatoire d'un mot-clé parmi les références ajoutées
-                $randomMotsCles[] = $this->getReference('mot_cle_' . rand(1, 25));
-            }
+            $marquePage->setUrl($faker->url);
+            $marquePage->setDateCreation($faker->dateTimeThisMonth);
+            $marquePage->setCommentaire($faker->sentence); 
+           
+            $motsCles = ['Technologie', 'Actualités', 'Sport', 'Cuisine', 'Voyage', 'Musique', 'Art', 'Cinéma', 'Science', 'Politique'];
+            $randomMotsCles = $faker->randomElements($motsCles, $faker->numberBetween(2, 5));
 
             foreach ($randomMotsCles as $motCle) {
-                $marquePage->addMotsCle($motCle);
+                $motCleObj = new MotsCles();
+                $motCleObj->setMotCle($motCle);
+                $manager->persist($motCleObj);
+                $marquePage->addMotsCle($motCleObj);
             }
 
             $manager->persist($marquePage);
         }
 
-        $manager->flush(); // Enregistrer les changements dans la base de données
+        $manager->flush(); 
     }
 }

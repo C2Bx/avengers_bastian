@@ -1,3 +1,9 @@
-_security_logout:
-    resource: security.route_loader.logout
-    type: service
+livre_ajout:
+    path: '/livres/ajout'
+    controller: App\Controller\LivreController::ajout
+livre_modif:
+    path: '/livres/modifier/{id}'
+    controller: 'App\Controller\LivreController::modifierLivre'
+auteurs:
+    path: /auteurs
+    controller: App\Controller\AuteurController::index

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Modifier {% if auteur is defined %}l'auteur {{ auteur.nom }}{% else %}le livre {{ livre.titre }}{% endif %}
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Modifier {% if auteur is defined %}l'auteur {{ auteur.nom }}{% else %}le livre {{ livre.titre }}{% endif %}</h1>
+    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+        {{ form_widget(form) }}
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-primary">Modifier</button>
+            {% if auteur is defined %}
+                <a href="{{ path('app_auteur') }}" class="btn btn-secondary">Retour</a>
+            {% else %}
+                <a href="{{ path('app_livre') }}" class="btn btn-secondary">Retour</a>
+            {% endif %}
+        </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
