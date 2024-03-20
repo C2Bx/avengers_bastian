@@ -1,31 +1,39 @@
 controllers:
     resource: '../src/Controller/'
     type: attribute
+
 auteurs_plusieurs_livres:
     path: '/auteurs/plusieurs-livres'
     controller: 'App\Controller\SomeController::auteursPlusieursLivres'
+
 nombre_livres:
     path: '/nombre-livres'
     controller: 'App\Controller\SomeController::nombreLivres'
+
 livres_index:
     path: /livres
     controller: 'App\Controller\LivreController::index'
     methods: ['GET']
-livre_liste:
+
+livres_liste: 
     path: /livres
     controller: 'App\Controller\LivreController::index'
     methods: ['GET']
-auteur_modif:
-    path: /auteur/modif/{id}
+
+auteurs_modif: 
+    path: /auteurs/modif/{id}
     controller: 'App\Controller\AuteurController::modifierAuteur'
     methods: ['GET', 'POST']
+
 ajout_succes:
     path: /ajout-succes
     controller: App\Controller\AuteurController::ajoutSucces
+
 auteurs_index:
     path: /auteurs
     controller: 'App\Controller\AuteurController::index'
     methods: ['GET']
-detail_auteur:
-    path: /auteur/{id}
+
+details_auteur: 
+    path: /auteurs/{id} 
     controller: App\Controller\AuteurController::detail

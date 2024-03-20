@@ -16,8 +16,9 @@ class Livre
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $titre = null;
 
+    // Assurez-vous que nullable est défini sur true pour autoriser les livres sans auteurs
     #[ORM\ManyToOne(targetEntity: Auteur::class, inversedBy: 'livres')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Auteur $auteur = null;
 
     #[ORM\Column(type: 'date', nullable: true)]

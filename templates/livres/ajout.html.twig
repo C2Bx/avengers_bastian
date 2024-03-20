@@ -27,14 +27,13 @@
                     {{ form_widget(form.nombrePages, {'attr': {'class': 'form-control'}}) }}
                 </div>
                 
-                
                 {% if mode == 'ajouter' %}
                     <button type="submit" class="btn btn-secondary">Ajouter</button>
                 {% else %}
                     <button type="submit" class="btn btn-secondary">Modifier</button>
                 {% endif %}
                 
-                <a href="{{ path('livre_liste') }}" class="btn btn-primary">Retour à la liste</a>
+                <a href="{{ path('livres_index') }}" class="btn btn-primary">Retour à la liste</a>
                 
                 {{ form_end(form) }}
             </div>

@@ -69,7 +69,8 @@ class LivreController extends AbstractController
         $selectedAuteur = $auteurId ? $auteurRepository->find($auteurId) : null;
         $lettres = $livreRepository->findFirstLettersOfTitles();
         $maxBooksCounts = $auteurRepository->findMaxBooksCountByAuthors();
-        $maxBooks = max(array_column($maxBooksCounts, 'nbrLivres'));
+        $booksCounts = array_column($maxBooksCounts, 'nbrLivres');
+        $maxBooks = !empty($booksCounts) ? max($booksCounts) : 0;
         $bookCountOptions = range(1, $maxBooks > 0 ? $maxBooks - 1 : 0);
 
         return $this->render('livres/index.html.twig', [
@@ -109,11 +110,9 @@ class LivreController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $auteur = $livre->getAuteur();
             $entityManager->persist($livre);
             $entityManager->flush();
 
-           
             return $this->redirectToRoute('livre_ajout_succes', ['ajout' => true]);
         }
 
@@ -138,24 +137,22 @@ class LivreController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-           
             return $this->redirectToRoute('livre_ajout_succes', ['modification' => true]);
         }
 
         return $this->render('livres/ajout.html.twig', [
             'form' => $form->createView(),
             'mode' => 'modifier',
+            'livre' => $livre,
         ]);
     }
 
     #[Route('/livres/ajout_succes', name: 'livre_ajout_succes')]
     public function ajoutSucces(Request $request): Response
     {
-       
         $livreAjoute = $request->query->get('ajout');
         $livreModifie = $request->query->get('modification');
 
-      
         $message = $livreAjoute ? "Livre ajouté avec succès ! Merci d'avoir ajouté un livre." : "Livre modifié avec succès ! Merci d'avoir modifié un livre.";
 
         return $this->render('livres/ajout_succes.html.twig', [
