@@ -32,7 +32,7 @@
                         </tr>
                         <tr>
                             <th scope="row">Auteur</th>
-                            <td>{{ livre.auteur.nom|default('Auteur inconnu') }} {{ livre.auteur.prenom|default('Prénom inconnu') }}</td>
+                            <td>{{ livre.auteur.nom|default('Nom inconnu') }} {{ livre.auteur.prenom|default('Prénom inconnu') }}</td>
                         </tr>
                         <tr>
                             <th scope="row">Année de Parution</th>
@@ -55,7 +55,7 @@
             </div>
         </div>
     </section>
-    <a href="{{ path('livres_liste') }}" class="btn btn-primary">Retour à la liste</a>
+    <a href="{{ path('livres_liste') }}" class="btn btn-dark">Retour à la liste</a>
 
     <a href="{{ path('livre_modif', {'id': livre.id}) }}" class="btn btn-secondary">Modifier</a>
 </div>

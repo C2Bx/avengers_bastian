@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\LivreRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
 class Livre
@@ -16,9 +17,10 @@ class Livre
     #[ORM\Column(type: 'string', length: 255)]
     private ?string $titre = null;
 
-    // Assurez-vous que nullable est défini sur true pour autoriser les livres sans auteurs
     #[ORM\ManyToOne(targetEntity: Auteur::class, inversedBy: 'livres')]
     #[ORM\JoinColumn(nullable: true)]
+    #[Assert\Type(type: Auteur::class)]
+    #[Assert\Valid]
     private ?Auteur $auteur = null;
 
     #[ORM\Column(type: 'date', nullable: true)]

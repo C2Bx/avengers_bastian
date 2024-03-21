@@ -1,0 +1,17 @@
+{# templates/employe/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Liste des Employés</h1>
+    
+    {% if employes is empty %}
+        <p>Aucun employé n'est enregistré dans le système.</p>
+    {% else %}
+        {# Affichez ici la liste des employés #}
+        {% for employe in employes %}
+            {# Structure pour chaque employé #}
+            <div>{{ employe.nom }} {{ employe.prenom }}</div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

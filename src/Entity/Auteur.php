@@ -65,7 +65,6 @@ class Auteur
         return $this->livres;
     }
 
-    // Méthode pour ajouter un livre à la collection
     public function addLivre(Livre $livre): self
     {
         if (!$this->livres->contains($livre)) {
@@ -75,11 +74,9 @@ class Auteur
         return $this;
     }
 
-    // Méthode pour retirer un livre de la collection
     public function removeLivre(Livre $livre): self
     {
         if ($this->livres->removeElement($livre)) {
-            // Si le livre était associé à cet auteur, le désassocier
             if ($livre->getAuteur() === $this) {
                 $livre->setAuteur(null);
             }
@@ -87,15 +84,15 @@ class Auteur
         return $this;
     }
 
-    /**
-     * @param string $letter La lettre par laquelle filtrer les livres
-     * @return Collection|Livre[]
-     */
     public function getLivresByFirstLetter(string $letter): Collection
     {
-        // Filtrer les livres de l'auteur commençant par la lettre spécifiée
-        return $this->livres->filter(function($livre) use ($letter) {
+        return $this->livres->filter(function ($livre) use ($letter) {
             return stripos($livre->getTitre(), $letter) === 0;
         });
+    }
+
+    public function __toString(): string
+    {
+        return $this->getNom() . ' ' . $this->getPrenom();
     }
 }

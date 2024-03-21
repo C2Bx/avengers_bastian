@@ -7,35 +7,20 @@
     <title>{% block title %}Bienvenue !{% endblock %}</title>
     <link rel="icon" href="{{ asset('img/logo.png') }}">
     <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-    <!-- Précharge de Bootstrap CSS -->
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" as="style" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
-        /* Ajoutez vos styles personnalisés ici */
-        .btn-primary {
-            background-color: #212529 !important; /* Couleur de fond du bouton */
-            border-color: #212529 !important; /* Couleur de la bordure du bouton */
+        .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-menu > li > a:active {
+            background-color: #6c757d; /* Gris pour le fond */
+            color: white; /* Blanc pour le texte */
         }
-
-        .btn-primary:hover {
-            background-color: #1a1e21 !important; /* Couleur de fond du bouton au survol */
-            border-color: #1a1e21 !important; /* Couleur de la bordure du bouton au survol */
-        }
-
-        /* Faites en sorte que le pied de page reste en bas de la page */
-        html, body {
-            height: 100%;
-        }
-
-        .container {
-            min-height: calc(100% - 100px); /* 100px est la hauteur du pied de page */
+        .dropdown-menu > li > a:not(:active) {
+            color: black; /* Texte en noir pour les éléments non-cliqués */
         }
     </style>
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
-    <!-- Barre de navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
@@ -68,29 +53,27 @@
                             <li><a class="dropdown-item" href="/lecailloux/flore">Flore</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/employes">Employés</a>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
-
-    <!-- Contenu principal -->
     <div class="container mt-4">
         {% block body %}{% endblock %}
     </div>
-
-    <!-- Pied de page -->
     <footer class="footer py-4 bg-dark text-white">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    <p class="mb-0">© 2024 CAZAUX Bastian</p>
+                                        <p class="mb-0">© 2024 CAZAUX Bastian</p>
                     <p>Tous droits réservés.</p>
                 </div>
             </div>
         </div>
     </footer>
-
-    <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

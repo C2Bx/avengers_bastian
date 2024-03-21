@@ -1,40 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-    {{ mode == 'ajouter' ? 'Ajouter un livre' : 'Modifier un livre' }}
-{% endblock %}
+{% set pageTitle = mode == 'ajouter' ? 'Ajouter un livre' : 'Modifier un livre' %}
+{% set actionButton = mode == 'ajouter' ? 'Ajouter' : 'Modifier' %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
 
 {% block body %}
     <div class="container">
-        <h1 class="mt-5">{{ mode == 'ajouter' ? 'Ajouter un livre' : 'Modifier un livre' }}</h1>
+        <h1 class="mt-5">{{ pageTitle }}</h1>
 
         <div class="row mt-4">
             <div class="col-md-6">
                 {{ form_start(form) }}
-                
+
+                {# Génération des champs de formulaire avec une boucle pour réduire la répétition #}
+                {% for field in [form.titre, form.anneeParution, form.nombrePages] %}
+                    <div class="mb-3">
+                        {{ form_label(field, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(field, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                {% endfor %}
+
+                {# Champ de sélection de l'auteur #}
                 <div class="mb-3">
-                    {{ form_label(form.titre, 'Titre', {'label_attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_label(form.auteur, 'Auteur', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.auteur, {'attr': {'class': 'form-control'}, 'placeholder': 'Choisir un auteur'}) }}
                 </div>
-                
-                <div class="mb-3">
-                    {{ form_label(form.anneeParution, 'Année de parution', {'label_attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(form.anneeParution, {'attr': {'class': 'form-control'}}) }}
-                </div>
-                
-                <div class="mb-3">
-                    {{ form_label(form.nombrePages, 'Nombre de pages', {'label_attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(form.nombrePages, {'attr': {'class': 'form-control'}}) }}
-                </div>
-                
-                {% if mode == 'ajouter' %}
-                    <button type="submit" class="btn btn-secondary">Ajouter</button>
-                {% else %}
-                    <button type="submit" class="btn btn-secondary">Modifier</button>
-                {% endif %}
-                
-                <a href="{{ path('livres_index') }}" class="btn btn-primary">Retour à la liste</a>
-                
+
+                {# Boutons de soumission et retour #}
+                <button type="submit" class="btn btn-secondary">{{ actionButton }}</button>
+                <a href="{{ path('livres_index') }}" class="btn btn-dark">Retour à la liste</a>
+
                 {{ form_end(form) }}
             </div>
         </div>
