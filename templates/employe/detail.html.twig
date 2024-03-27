@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de l'Employé{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Détails de l'Employé</h1>
+
+    {% if employe is defined %}
+        <section>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ employe.prenom|default('Prénom inconnu') }} {{ employe.nom|default('Nom inconnu') }}</h5>
+                    <p class="card-text">Informations sur l'employé.</p>
+
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th scope="row">ID</th>
+                                <td>{{ employe.id|default('ID inconnu') }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Prénom</th>
+                                <td>{{ employe.prenom|default('Prénom inconnu') }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Nom</th>
+                                <td>{{ employe.nom|default('Nom inconnu') }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Rue</th>
+                                <td>{{ employe.adresse ? employe.adresse.rue : 'Rue inconnue' }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Ville</th>
+                                <td>{{ employe.adresse ? employe.adresse.ville : 'Ville inconnue' }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Code Postal</th>
+                                <td>{{ employe.adresse ? employe.adresse.codePostal : 'Code Postal inconnu' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <div class="mt-3">
+            <a href="{{ path('employes_index') }}" class="btn btn-dark">Retour à la liste</a>
+            <a href="{{ path('modifier_employe', {'id': employe.id}) }}" class="btn btn-secondary">Modifier</a>
+        </div>
+    {% else %}
+        <p>Aucun employé trouvé.</p>
+    {% endif %}
+</div>
+{% endblock %}

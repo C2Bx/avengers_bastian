@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Succès{% endblock %}
+
+{% block body %}
+    {% if employeAjoute %}
+        <h1>Employé ajouté avec succès !</h1>
+        <p>Merci d'avoir ajouté un employé.</p>
+    {% elseif employeModifie %}
+        <h1>Employé modifié avec succès !</h1>
+        <p>Merci d'avoir modifié un employé.</p>
+    {% endif %}
+    <a href="{{ retour_url }}">Retour à la liste des employés</a>
+{% endblock %}

@@ -4,8 +4,7 @@ namespace App\Entity;
 
 use App\Repository\EmployeRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EmployeRepository::class)]
 class Employe
@@ -16,16 +15,16 @@ class Employe
     private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "Le nom est obligatoire.")]
     private ?string $nom = null;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "Le prénom est obligatoire.")]
     private ?string $prenom = null;
 
-    // La propriété $adresse est une référence à l'entité Adresse, pas une chaîne.
     #[ORM\OneToOne(targetEntity: Adresse::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Adresse $adresse = null;
-
-    // Getters et Setters
 
     public function getId(): ?int
     {
@@ -37,7 +36,6 @@ class Employe
         return $this->nom;
     }
 
-    // Utiliser 'self' au lieu de 'static' pour le retour du setter
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
@@ -49,20 +47,17 @@ class Employe
         return $this->prenom;
     }
 
-    // Utiliser 'self' au lieu de 'static' pour le retour du setter
     public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
         return $this;
     }
 
-    // Le getter et le setter doivent être pour l'entité Adresse, pas pour une chaîne
     public function getAdresse(): ?Adresse
     {
         return $this->adresse;
     }
 
-    // Le paramètre du setter doit être de type ?Adresse pour accepter null
     public function setAdresse(?Adresse $adresse): self
     {
         $this->adresse = $adresse;

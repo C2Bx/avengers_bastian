@@ -2,38 +2,36 @@
 
 namespace App\Form\Type;
 
-use App\Entity\Employe;
+use App\Entity\Adresse;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use App\Form\Type\AdresseType;
 
-class EmployeType extends AbstractType
+class AdresseType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('prenom', TextType::class, [
-                'label' => 'Prénom',
+            ->add('rue', TextType::class, [
+                'label' => 'Rue',
                 'attr' => ['class' => 'form-control'],
             ])
-            ->add('nom', TextType::class, [
-                'label' => 'Nom',
+            ->add('ville', TextType::class, [
+                'label' => 'Ville',
                 'attr' => ['class' => 'form-control'],
             ])
-            ->add('adresse', AdresseType::class, [
-                'required' => false,
-                'label' => false,
+            ->add('codePostal', TextType::class, [
+                'label' => 'Code Postal',
+                'attr' => ['class' => 'form-control'],
             ]);
-            
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Employe::class,
+            'data_class' => Adresse::class,
         ]);
     }
 }

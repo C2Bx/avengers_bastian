@@ -37,3 +37,15 @@ auteurs_index:
 details_auteur: 
     path: /auteurs/{id} 
     controller: App\Controller\AuteurController::detail
+employes_index:
+    path: /employes
+    controller: 'App\Controller\EmployeController::index'
+    methods: ['GET']
+# config/routes.yaml
+app_ajout_succes:
+    path: 'employe/ajout-succes'
+    controller: 'App\Controller\VotreController::votreAction'
+# config/routes.yaml
+app_employe:
+    path: '/employe'
+    controller: 'App\Controller\EmployeController::index'

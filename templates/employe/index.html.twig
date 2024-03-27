@@ -1,17 +1,57 @@
-{# templates/employe/index.html.twig #}
-
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    {{ filterNom is defined and filterNom is not null ? 'Liste des Employés filtrés par ' ~ filterNom : 'Liste des Employés' }}
+{% endblock %}
+
 {% block body %}
-    <h1>Liste des Employés</h1>
-    
-    {% if employes is empty %}
-        <p>Aucun employé n'est enregistré dans le système.</p>
-    {% else %}
-        {# Affichez ici la liste des employés #}
-        {% for employe in employes %}
-            {# Structure pour chaque employé #}
-            <div>{{ employe.nom }} {{ employe.prenom }}</div>
-        {% endfor %}
-    {% endif %}
+<div class="container mt-5">
+    <form method="get" action="{{ path('employes_index') }}" class="mb-4">
+        <div class="form-row">
+            <div class="col">
+                <select class="form-control" name="filterNom">
+                    <option value="">Choisir un employé</option>
+                    {% for employe in allEmployes %}
+                        <option value="{{ employe.nom }}" {% if filterNom == employe.nom %}selected{% endif %}>{{ employe.nom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col">
+                <select class="form-control" name="sortOrder">
+                    <option value="ASC" {% if sortOrder == 'ASC' %}selected{% endif %}>Croissant</option>
+                    <option value="DESC" {% if sortOrder == 'DESC' %}selected{% endif %}>Décroissant</option>
+                </select>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-dark">Filtrer</button>
+                <a href="{{ path('employe_ajout') }}" class="btn btn-secondary">Ajouter un employé</a>
+            </div>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for employe in employes %}
+                <tr>
+                    <td>{{ employe.nom }}</td>
+                    <td>{{ employe.prenom }}</td>
+                    <td>
+                        <a href="{{ path('detail_employe', {'id': employe.id}) }}" class="btn btn-secondary">Détails</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">Aucun employé trouvé.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
