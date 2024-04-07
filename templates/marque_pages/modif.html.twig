@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Modifier {% if auteur is defined %}l'auteur {{ auteur.nom }}{% else %}le livre {{ livre.titre }}{% endif %}
+    Modifier le marque-page
 {% endblock %}
 
 {% block body %}
     <div class="container">
-        <h1>Modifier {% if auteur is defined %}l'auteur {{ auteur.nom }}{% else %}le livre {{ livre.titre }}{% endif %}</h1>
+        <h1>Modifier le marque-page</h1>
 
         <div class="row mt-4">
             <div class="col-md-6">
@@ -17,9 +17,11 @@
 
                 {# Bouton de soumission du formulaire #}
                 <button type="submit" class="btn btn-primary">Modifier</button>
-                <a href="{{ path('employes_index') }}" class="btn btn-dark">Retour à la liste</a>
 
                 {{ form_end(form) }}
+
+                {# Bouton de retour #}
+                <a href="{{ path('marque_pages_index') }}" class="btn btn-dark">Retour à la liste</a>
             </div>
         </div>
     </div>

@@ -36,7 +36,7 @@ class MotsCles
         return $this->motCle;
     }
 
-    public function setMotCle(string $motCle): static
+    public function setMotCle(string $motCle): self
     {
         $this->motCle = $motCle;
 
@@ -51,7 +51,7 @@ class MotsCles
         return $this->marquePages;
     }
 
-    public function addMarquePage(MarquePage $marquePage): static
+    public function addMarquePage(MarquePage $marquePage): self
     {
         if (!$this->marquePages->contains($marquePage)) {
             $this->marquePages->add($marquePage);
@@ -61,12 +61,17 @@ class MotsCles
         return $this;
     }
 
-    public function removeMarquePage(MarquePage $marquePage): static
+    public function removeMarquePage(MarquePage $marquePage): self
     {
         if ($this->marquePages->removeElement($marquePage)) {
             $marquePage->removeMotsCle($this);
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->motCle ?? '';
     }
 }

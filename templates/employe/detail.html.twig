@@ -32,18 +32,20 @@
                                 <th scope="row">Nom</th>
                                 <td>{{ employe.nom|default('Nom inconnu') }}</td>
                             </tr>
-                            <tr>
-                                <th scope="row">Rue</th>
-                                <td>{{ employe.adresse ? employe.adresse.rue : 'Rue inconnue' }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Ville</th>
-                                <td>{{ employe.adresse ? employe.adresse.ville : 'Ville inconnue' }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">Code Postal</th>
-                                <td>{{ employe.adresse ? employe.adresse.codePostal : 'Code Postal inconnu' }}</td>
-                            </tr>
+                            {% if employe.adresse is defined %}
+                                <tr>
+                                    <th scope="row">Rue</th>
+                                    <td>{{ employe.adresse.rue|default('Rue inconnue') }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Ville</th>
+                                    <td>{{ employe.adresse.ville|default('Ville inconnue') }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Code Postal</th>
+                                    <td>{{ employe.adresse.codePostal|default('Code Postal inconnu') }}</td>
+                                </tr>
+                            {% endif %}
                         </tbody>
                     </table>
                 </div>

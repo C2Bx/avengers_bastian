@@ -55,8 +55,9 @@
             </div>
         </div>
     </section>
-    <a href="{{ path('livres_liste') }}" class="btn btn-dark">Retour à la liste</a>
-
-    <a href="{{ path('livre_modif', {'id': livre.id}) }}" class="btn btn-secondary">Modifier</a>
+    <div class="mt-3">
+        <a href="{{ path('livres_liste') }}" class="btn btn-dark">Retour à la liste</a>
+        <a href="{{ path('livre_modif', {'id': livre.id}) }}" class="btn btn-secondary">Modifier</a>
+    </div>
 </div>
 {% endblock %}

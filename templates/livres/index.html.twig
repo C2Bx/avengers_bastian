@@ -74,7 +74,7 @@
                     <tbody>
                         {% for livre in livres %}
                             <tr>
-                                <td>{{ livre.titre }}</td>
+                                <td>{{ livre.titre|default('Titre inconnu') }}</td>
                                 <td>
                                     {% if livre.auteur is not null %}
                                         {{ livre.auteur.nom }} {{ livre.auteur.prenom }}

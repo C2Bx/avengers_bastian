@@ -1,51 +1,102 @@
 controllers:
     resource: '../src/Controller/'
-    type: attribute
+    type: annotation
 
 auteurs_plusieurs_livres:
     path: '/auteurs/plusieurs-livres'
     controller: 'App\Controller\SomeController::auteursPlusieursLivres'
+    methods: ['GET'] 
 
 nombre_livres:
     path: '/nombre-livres'
     controller: 'App\Controller\SomeController::nombreLivres'
+    methods: ['GET']
 
 livres_index:
-    path: /livres
+    path: '/livres'
     controller: 'App\Controller\LivreController::index'
     methods: ['GET']
 
 livres_liste: 
-    path: /livres
+    path: '/livres/liste' 
     controller: 'App\Controller\LivreController::index'
     methods: ['GET']
 
 auteurs_modif: 
-    path: /auteurs/modif/{id}
+    path: '/auteurs/modif/{id}'
     controller: 'App\Controller\AuteurController::modifierAuteur'
     methods: ['GET', 'POST']
 
 ajout_succes:
-    path: /ajout-succes
-    controller: App\Controller\AuteurController::ajoutSucces
+    path: '/ajout-succes' 
+    controller: 'App\Controller\AuteurController::ajoutSucces'
+    methods: ['GET'] 
 
 auteurs_index:
-    path: /auteurs
+    path: '/auteurs'
     controller: 'App\Controller\AuteurController::index'
     methods: ['GET']
 
 details_auteur: 
-    path: /auteurs/{id} 
-    controller: App\Controller\AuteurController::detail
+    path: '/auteurs/{id}' 
+    controller: 'App\Controller\AuteurController::detail'
+    methods: ['GET']
+
 employes_index:
-    path: /employes
+    path: '/employes'
     controller: 'App\Controller\EmployeController::index'
     methods: ['GET']
-# config/routes.yaml
+
 app_ajout_succes:
-    path: 'employe/ajout-succes'
+    path: '/employe/ajout-succes'
     controller: 'App\Controller\VotreController::votreAction'
-# config/routes.yaml
+    methods: ['GET']
+
 app_employe:
     path: '/employe'
     controller: 'App\Controller\EmployeController::index'
+    methods: ['GET']
+
+lecailloux_faune:
+    path: '/lecailloux/faune'
+    controller: 'App\Controller\LecaillouxController::fauneAction'
+    methods: ['GET']
+
+lecailloux_flore:
+    path: '/lecailloux/flore'
+    controller: 'App\Controller\LecaillouxController::flore'
+    methods: ['GET']
+
+marque-pages_index:
+    path: '/marque-pages'
+    controller: 'App\Controller\MarquePageController::index'
+    methods: ['GET']
+
+marque_page_details:
+    path: '/marque-pages/details/{id}'
+    controller: 'App\Controller\MarquePageController::details'
+    methods: ['GET']
+
+nouveau_marque_page:
+    path: '/marque-page/ajouter'
+    controller: 'App\Controller\MarquePageController::ajout'
+    methods: ['GET', 'POST']
+
+details_route:
+    path: '/details/{id}'
+    controller: 'App\Controller\MarquePageController::details'
+    methods: ['GET']
+marque_pages_index:
+    path: '/marque-pages'
+    controller: 'App\Controller\MarquePageController::index'
+    methods: ['GET']
+details_marque_page:
+    path: '/details/{id}'
+    controller: App\Controller\MarquePageController::details
+# config/routes.yaml
+page_precedente:
+    path: /page-precedente
+    controller: App\Controller\YourControllerNameController::pagePrecedente
+marquepage_modif_succes:
+    path: /modif-succes
+    controller: App\Controller\MarquePageController::modifSucces

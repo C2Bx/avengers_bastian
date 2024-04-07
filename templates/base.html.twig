@@ -7,73 +7,62 @@
     <title>{% block title %}Bienvenue !{% endblock %}</title>
     <link rel="icon" href="{{ asset('img/logo.png') }}">
     <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" as="style" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <style>
-        .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-menu > li > a:active {
-            background-color: #6c757d; /* Gris pour le fond */
-            color: white; /* Blanc pour le texte */
-        }
-        .dropdown-menu > li > a:not(:active) {
-            color: black; /* Texte en noir pour les éléments non-cliqués */
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="{{ asset('img/logo.png') }}" alt="Logo" width="30" height="30" class="d-inline-block align-top">
-            </a>
-            <h1 style="color: white;">Symfony dans tous ses états !</h1>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/marque-pages">Marque-pages</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Livres & Auteurs
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="/livres">Livres</a></li>
-                            <li><a class="dropdown-item" href="/auteurs">Auteurs</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Cailloux
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="/lecailloux/faune">Faune</a></li>
-                            <li><a class="dropdown-item" href="/lecailloux/flore">Flore</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/employes">Employés</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container mt-4">
-        {% block body %}{% endblock %}
-    </div>
-    <footer class="footer py-4 bg-dark text-white">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                                        <p class="mb-0">© 2024 CAZAUX Bastian</p>
-                    <p>Tous droits réservés.</p>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo de Symfony dans tous ses états" width="30" height="30" class="d-inline-block align-top">
+                    <span class="fw-bold">Symfony dans tous ses états !</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/marque-pages">Marque-pages</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Livres &amp; Auteurs
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+                                <li><a class="dropdown-item" href="/livres">Livres</a></li>
+                                <li><a class="dropdown-item" href="/auteurs">Auteurs</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Cailloux
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                                <li><a class="dropdown-item" href="/lecailloux/faune">Faune</a></li>
+                                <li><a class="dropdown-item" href="/lecailloux/flore">Flore</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/employes">Employés</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
+        </nav>
+    </header>
+    
+    <main class="container mt-4">
+        {% block body %}{% endblock %}
+    </main>
+    
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p>© 2024 CAZAUX Bastian - Tous droits réservés.</p>
         </div>
     </footer>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-

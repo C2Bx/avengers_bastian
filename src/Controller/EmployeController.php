@@ -14,29 +14,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class EmployeController extends AbstractController
 {
     #[Route('/employes', name: 'employes_index', methods: ['GET'])]
-    public function index(Request $request, EmployeRepository $employeRepository): Response
+    public function index(EmployeRepository $employeRepository, Request $request): Response
     {
-        // Récupérer tous les employés pour peupler la liste déroulante "Choisir un employé".
-        $allEmployes = $employeRepository->findAll();
-        
-        // Récupérer les paramètres de filtrage et de tri depuis la requête.
-        $filterNom = $request->query->get('filterNom', '');
-        $sortOrder = $request->query->get('sortOrder', 'ASC');
-        
-        // Appliquer le filtrage en fonction de l'employé sélectionné, sinon lister tous les employés.
-        $criteria = [];
-        if ($filterNom !== '') {
-            $criteria = ['nom' => $filterNom];
-        }
+        $filterNom = $request->query->get('filterNom'); // Retrieve filterNom from request
+        $sortOrder = $request->query->get('sortOrder'); // Retrieve sortOrder from request
 
-        // Récupérer les employés filtrés et triés.
-        $filteredEmployes = $employeRepository->findBy($criteria, ['nom' => $sortOrder]);
+        // Fetch employes data from repository
+        $employes = $employeRepository->findAll();
 
+        // Pass employes, filterNom, and sortOrder to the template
         return $this->render('employe/index.html.twig', [
-            'employes' => $filteredEmployes,
-            'allEmployes' => $allEmployes,
+            'employes' => $employes,
             'filterNom' => $filterNom,
-            'sortOrder' => $sortOrder,
+            'sortOrder' => $sortOrder, // Pass sortOrder to the template
         ]);
     }
 
@@ -55,28 +45,26 @@ class EmployeController extends AbstractController
     {
         $employe = new Employe();
         $form = $this->createForm(EmployeType::class, $employe);
-
-        // Définir le mode comme "ajouter"
-        $mode = 'ajouter';
-
         $form->handleRequest($request);
+
+        $mode = 'ajouter'; // Définir le mode comme "ajouter"
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($employe);
             $entityManager->flush();
-            // Rediriger vers la page de succès d'ajout d'employé
-            return $this->redirectToRoute('employe_ajout_succes');
+            return $this->redirectToRoute('employes_success', ['action' => 'ajoute']);
         }
+
         return $this->render('employe/ajout.html.twig', [
             'form' => $form->createView(),
-            'mode' => $mode, // Passer le mode au modèle Twig
+            'mode' => $mode, // Passer la variable mode au template
         ]);
     }
 
     #[Route("/employes/modifier/{id}", name: "modifier_employe", methods: ['GET', 'POST'])]
-    public function modifier(Request $request, EntityManagerInterface $entityManager, int $id): Response
+    public function modifier(Request $request, EmployeRepository $employeRepository, EntityManagerInterface $entityManager, int $id): Response
     {
-        $employe = $entityManager->getRepository(Employe::class)->find($id);
+        $employe = $employeRepository->find($id);
         if (!$employe) {
             throw $this->createNotFoundException("L'employé avec l'ID $id n'existe pas.");
         }
@@ -86,8 +74,7 @@ class EmployeController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-            // Rediriger vers la page de succès d'ajout d'employé
-            return $this->redirectToRoute('employe_ajout_succes');
+            return $this->redirectToRoute('employes_success', ['action' => 'modifie']);
         }
 
         return $this->render('employe/modif.html.twig', [
@@ -96,19 +83,18 @@ class EmployeController extends AbstractController
         ]);
     }
 
-    #[Route('/employes/ajout_succes', name: 'employe_ajout_succes')]
-    public function ajoutSucces(): Response
+    #[Route('/employes/success', name: 'employes_success')]
+    public function success(Request $request): Response
     {
-        // Définir l'URL de retour à la liste des employés
-        $retourUrl = $this->generateUrl('employes_index');
-    
-        // Définir la variable pour indiquer que l'employé a été ajouté
-        $employeAjoute = true;
-    
-        // Rendre le template en passant les variables nécessaires
+        $action = $request->query->get('action', '');
+
+        $employeAjoute = $action === 'ajoute';
+        $employeModifie = $action === 'modifie';
+
         return $this->render('employe/ajout_succes.html.twig', [
-            'retour_url' => $retourUrl,
-            'employeAjoute' => $employeAjoute
+            'employeAjoute' => $employeAjoute,
+            'employeModifie' => $employeModifie,
+            'retour_url' => $this->generateUrl('employes_index'),
         ]);
     }
 }

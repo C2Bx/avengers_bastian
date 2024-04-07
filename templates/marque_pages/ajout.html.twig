@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% set pageTitle = mode == 'ajouter' ? 'Ajouter un marque-page' : 'Modifier un marque-page' %}
+{% set actionButton = mode == 'ajouter' ? 'Ajouter' : 'Modifier' %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="mt-5">{{ pageTitle }}</h1>
+
+    {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.url, 'URL', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.url, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.motsCles, 'Mots-clés', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.motsCles, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        {# Si vous avez d'autres champs à ajouter, vous pouvez les inclure ici de la même manière #}
+
+        <div class="text-right">
+            <button type="submit" class="btn btn-secondary mt-3">{{ actionButton }}</button>
+            <a href="{{ path('marque_pages_index') }}" class="btn btn-dark mt-3">Retour à la liste</a>
+        </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

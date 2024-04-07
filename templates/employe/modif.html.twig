@@ -29,8 +29,7 @@
                 {% endif %}
             </div>
 
-            <!-- Ici, ajoutez les autres champs de l'adresse si votre formulaire les inclut -->
-            <!-- Exemple: -->
+            <!-- Champs de l'adresse -->
             <div class="form-group">
                 {{ form_label(form.adresse.rue, 'Rue', {'label_attr': {'class': 'form-label'}}) }}
                 {{ form_widget(form.adresse.rue, {'attr': {'class': 'form-control'}}) }}
@@ -46,7 +45,7 @@
                 {{ form_widget(form.adresse.codePostal, {'attr': {'class': 'form-control'}}) }}
             </div>
             
-            <!-- Boutons après le champ Code Postal -->
+            <!-- Boutons -->
             <div class="form-group">
                 <button type="submit" class="btn btn-secondary">Modifier</button>
                 <a href="{{ path('employes_index') }}" class="btn btn-dark">Retour à la liste</a>

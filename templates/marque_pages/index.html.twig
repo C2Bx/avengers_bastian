@@ -1,45 +1,45 @@
-
-
 {% extends 'base.html.twig' %}
 
-{% block title %}Marque pages{% endblock %}
+{% block title %}Marque Pages{% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
     <link rel="stylesheet" href="{{ asset('styles/custom.css') }}">
 {% endblock %}
 
 {% block body %}
-<div class="container mt-5">
-    {% if marque_pages is not empty %}
-        <div class="table-responsive">
-            <table class="table table-custom">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nom</th>
-                        <th>Commentaire</th>
-                        <th>Détails du marque page</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for mpr in marque_pages %}
+    <div class="container mt-5">
+        <div class="mb-3">
+            <a href="{{ path('marquepage_ajout') }}">Ajouter un Marque Page</a>
+        </div>
+        {% if marque_pages is not empty %}
+            <div class="table-responsive">
+                <table class="table table-custom">
+                    <thead>
                         <tr>
-                            <td>{{ mpr.id }}</td>
-                            <td>{{ mpr.url }}</td>
-                            <td>{{ mpr.commentaire }}</td>
-                            <td>
-                                <a class="btn btn-secondary" href="details/{{ mpr.id }}">Détails</a>
-                            </td>
+                            <th>ID</th>
+                            <th>URL</th>
+                            <th>Commentaire</th>
+                            <th>Détails du marque-page</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    {% else %}
-        <div class="alert alert-info alert-custom" role="alert">
-            Aucun marque-page trouvé.
-        </div>
-    {% endif %}
-</div>
+                    </thead>
+                    <tbody>
+                        {% for mpr in marque_pages %}
+                            <tr>
+                                <td>{{ mpr.id }}</td>
+                                <td>{{ mpr.url }}</td>
+                                <td>{{ mpr.commentaire }}</td>
+                                <td>
+                                    <a class="btn btn-secondary" href="{{ path('details_marque_page', {'id': mpr.id}) }}">Détails</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="alert alert-info alert-custom" role="alert">
+                Aucun marque-page trouvé.
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

@@ -1,82 +1,110 @@
-body {
-    background-color: #fff;
+@import url('https://fonts.googleapis.com/css?family=Cardo:400i|Rubik:400,700&display=swap');
+
+:root {
+  --transition-duration: 700ms;
+  --transition-easing: cubic-bezier(0.19, 1, 0.22, 1);
+  --font-sans: 'Rubik', sans-serif;
+  --font-serif: 'Cardo', serif;
+  --card-bg-color: whitesmoke;
+  --btn-hover-color: #333;
+  --focus-outline-color: yellow;
 }
 
-body * {
-    font-family: "Helvetica Neue", Arial, sans-serif;
+* {
+  box-sizing: border-box;
 }
 
-table {
-    border: 3px solid black;
-    width: 100%; /* Assurez-vous que la table utilise toute la largeur disponible */
-    border-collapse: collapse; /* Pour que les bordures soient bien collées */
+html, body {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-sans);
 }
 
-table * {
-    border: 2px solid #000;
-    padding: 5px;
-    text-align: left; /* Alignez le texte à gauche pour une meilleure lisibilité */
+.page-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+  margin: auto;
 }
 
-.table-custom {
-    border-collapse: separate;
-    border-spacing: 0 15px;
+.card {
+  position: relative;
+  overflow: hidden;
+  padding: 1rem;
+  width: 100%;
+  text-align: center;
+  background-color: var(--card-bg-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Simplification de l'ombre */
+  border-radius: 12px;
+  height: 350px;
+  transition: transform var(--transition-duration) var(--transition-easing);
 }
 
-.table-custom thead th {
-    background-color: #212529;
-    color: white;
+.card:hover {
+  transform: scale(0.95);
 }
 
-.table-custom tbody tr {
-    background-color: #FFF;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.card {
+  background-image: url('chemin/vers/votre/image.jpg');
+  background-size: cover; /* Changement à 'cover' pour couvrir complètement la carte */
+  background-position: center center; /* Simplification de la position de l'image de fond */
 }
 
-.table-custom td, .table-custom th {
-    vertical-align: middle;
-    padding: 10px; /* Un peu plus d'espace pour la respiration */
-    border: none;
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  z-index: 1;
+  color: rgb(0, 0, 0);
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(5px);
+  border-radius: 8px; /* Ajout de bord arrondi */
 }
 
-.table-custom td:first-child,
-.table-custom th:first-child {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+.title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  line-height: 1.2;
 }
 
-.table-custom td:last-child,
-.table-custom th:last-child {
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+.copy {
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  font-style: italic;
+  line-height: 1.35;
 }
 
-.btn-custom {
-    background-color: #212529; /* Couleur de fond du bouton */
-    color: white; /* Couleur du texte */
-    border: none; /* Pas de bordure */
-    padding: 10px 20px; /* Padding horizontal et vertical */
-    border-radius: 5px; /* Arrondi des coins */
-    transition: background-color 0.3s; /* Transition pour l'interaction */  
+.btn {
+  cursor: pointer;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem; /* Augmentation de la taille de la police */
+  font-weight: bold;
+  letter-spacing: 0.025rem;
+  text-transform: uppercase;
+  color: white;
+  background-color: black;
+  border: none;
+  border-radius: 8px;
+  transition: background-color var(--transition-duration) var(--transition-easing),
+              color var(--transition-duration) var(--transition-easing);
 }
 
-.btn-custom:hover {
-    background-color: #1a1e21; /* Couleur de fond au survol */
+.btn:hover {
+  background-color: var(--btn-hover-color);
+  color: lightgray;
 }
 
-.alert-custom {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #f5c6cb;
+.btn:focus {
+  outline: 2px dashed var(--focus-outline-color);
+  outline-offset: 3px;
 }
 
-.form-control{
-    margin-bottom: 1rem;
-}
-
-a{
-    margin-bottom: 1rem;
-    margin-top: 1rem;
+@media (hover: hover) {
+  .card:hover .content {
+    transform: translateY(-10%);
+  }
 }

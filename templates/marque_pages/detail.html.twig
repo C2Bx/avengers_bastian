@@ -53,6 +53,7 @@
             </tbody>
         </table>
     </section>
-    <a href="/marque-pages" class="btn btn-dark">Retour à la liste</a>
+    <a href="{{ path('marquepage_modifier', {'id': marquePage.id}) }}" class="btn btn-primary">Modifier</a>
+    <a href="{{ path('marque_pages_index') }}" class="btn btn-dark">Retour à la liste</a>
 </div>
 {% endblock %}

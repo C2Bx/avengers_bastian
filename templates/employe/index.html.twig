@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ filterNom is defined and filterNom is not null ? 'Liste des Employés filtrés par ' ~ filterNom : 'Liste des Employés' }}
+    {{ filterNom is defined and filterNom ? 'Liste des Employés filtrés par ' ~ filterNom : 'Liste des Employés' }}
 {% endblock %}
 
 {% block body %}
@@ -11,7 +11,7 @@
             <div class="col">
                 <select class="form-control" name="filterNom">
                     <option value="">Choisir un employé</option>
-                    {% for employe in allEmployes %}
+                    {% for employe in employes %}
                         <option value="{{ employe.nom }}" {% if filterNom == employe.nom %}selected{% endif %}>{{ employe.nom }}</option>
                     {% endfor %}
                 </select>
