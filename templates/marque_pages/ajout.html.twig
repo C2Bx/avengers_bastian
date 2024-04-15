@@ -16,11 +16,15 @@
         </div>
 
         <div class="form-group">
-            {{ form_label(form.motsCles, 'Mots-clés', {'label_attr': {'class': 'form-label'}}) }}
-            {{ form_widget(form.motsCles, {'attr': {'class': 'form-control'}}) }}
+            {{ form_label(form.motsCles, 'Mots-clés existants', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.motsCles, {'attr': {'class': 'form-control', 'multiple': 'multiple'}}) }}
         </div>
 
-        {# Si vous avez d'autres champs à ajouter, vous pouvez les inclure ici de la même manière #}
+        <!-- Nouveau champ pour ajouter des mots clés -->
+        <div class="form-group">
+            <label for="new_motsCles" class="form-label">Ajouter de nouveaux Mots-clés</label>
+            <input type="text" id="new_motsCles" name="new_motsCles" class="form-control" placeholder="Entrez les nouveaux mots clés séparés par des virgules" />
+        </div>
 
         <div class="text-right">
             <button type="submit" class="btn btn-secondary mt-3">{{ actionButton }}</button>

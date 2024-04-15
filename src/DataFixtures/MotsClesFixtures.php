@@ -5,23 +5,22 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\MotsCles;
-use Faker\Factory;
 
 class MotsClesFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $faker = Factory::create('fr_FR');
+        $motsClesUniques = ['Technologie', 'Actualités', 'Sport', 'Cuisine', 'Voyage', 'Musique', 'Art', 'Cinéma', 'Science', 'Politique'];
 
-        $motsCles = ['Technologie', 'Actualités', 'Sport', 'Cuisine', 'Voyage', 'Musique', 'Art', 'Cinéma', 'Science', 'Politique'];
-
-        foreach ($motsCles as $motCle) {
-            $motCleObj = new MotsCles();
-            $motCleObj->setMotCle($motCle);
-            $manager->persist($motCleObj);
+        foreach ($motsClesUniques as $motCleLabel) {
+            $existingMotCle = $manager->getRepository(MotsCles::class)->findOneBy(['motCle' => $motCleLabel]);
+            if (!$existingMotCle) {
+                $motCle = new MotsCles();
+                $motCle->setMotCle($motCleLabel);
+                $manager->persist($motCle);
+            }
         }
 
         $manager->flush();
     }
 }
-
