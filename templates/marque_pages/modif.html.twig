@@ -12,8 +12,23 @@
             <div class="col-md-6">
                 {{ form_start(form) }}
 
-                {# Affichage des champs du formulaire #}
-                {{ form_widget(form) }}
+                {# Champ pour l'URL #}
+                <div class="form-group">
+                    {{ form_label(form.url, 'URL', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.url, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                {# Champ pour les mots-clés #}
+                <div class="form-group">
+                    {{ form_label(form.motsCles, 'Mots-clés', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.motsCles, {'attr': {'class': 'form-control'}}) }}
+                </div>
+
+                {# Champ pour ajouter un nouveau mot-clé #}
+                <div class="form-group">
+                    <label for="new_motCle" class="form-label">Ajouter un nouveau mot-clé</label>
+                    <input type="text" id="new_motCle" name="new_motCle" class="form-control" placeholder="Entrez un nouveau mot-clé" />
+                </div>
 
                 {# Bouton de soumission du formulaire #}
                 <button type="submit" class="btn btn-primary">Modifier</button>
