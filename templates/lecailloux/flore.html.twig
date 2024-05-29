@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Flore{% endblock %}
+{% block title %}{{ 'Flore'|trans }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -9,13 +9,13 @@
 
 {% block body %}
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Flore</h1>
+    <h1 class="text-center mb-4">{{ 'Flore'|trans }}</h1>
     <div class="row">
         {% if flore is not empty %}
             {% for plante in flore %}
                 <div class="col-md-4 mb-3">
                     <div class="card">
-                        <img src="{{ asset(plante.img) }}" class="card-img-top" alt="Image de flore">
+                        <img src="{{ asset(plante.img) }}" class="card-img-top" alt="{{ 'Image de flore'|trans }}">
                         <div class="card-body">
                             <p class="card-text">{{ plante.commentaire }}</p>
                         </div>
@@ -23,7 +23,7 @@
                 </div>
             {% endfor %}
         {% else %}
-            <div class="alert alert-info">Aucune plante trouvée.</div>
+            <div class="alert alert-info">{{ 'Aucune plante trouvée.'|trans }}</div>
         {% endif %}
     </div>
 </div>

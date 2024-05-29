@@ -7,11 +7,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Faune;
 use App\Entity\Flore;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 class LeCaillouxController extends AbstractController
 {
-    #[Route('/lecailloux/faune', name: 'Faune')]
+    #[Route('/{_locale}/faune', name: 'Faune', methods: ['GET'], requirements: ['_locale' => 'fr|en|es'])]
     public function afficherTableFaune(EntityManagerInterface $entityManager): Response {
         $faune = $entityManager->getRepository(Faune::class)->findAll();
         return $this->render('lecailloux/faune.html.twig', [
@@ -19,7 +19,7 @@ class LeCaillouxController extends AbstractController
         ]);
     }
 
-    #[Route('/lecailloux/flore', name: 'Flore')]
+    #[Route('/{_locale}/flore', name: 'Flore', methods: ['GET'], requirements: ['_locale' => 'fr|en|es'])]
     public function afficherTableFlore(EntityManagerInterface $entityManager): Response {
         $flore = $entityManager->getRepository(Flore::class)->findAll();
         return $this->render('lecailloux/flore.html.twig', [

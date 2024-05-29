@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Marque Pages{% endblock %}
+{% block title %}{% trans %}Marque Pages{% endtrans %}{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('styles/custom.css') }}">
@@ -9,17 +9,17 @@
 {% block body %}
     <div class="container mt-5">
         <div class="mb-3">
-            <a href="{{ path('marquepage_ajout') }}">Ajouter un Marque Page</a>
+            <a href="{{ path('marquepage_ajout') }}">{% trans %}Ajouter un Marque Page{% endtrans %}</a>
         </div>
         {% if marque_pages is not empty %}
             <div class="table-responsive">
                 <table class="table table-custom">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>URL</th>
-                            <th>Commentaire</th>
-                            <th>Détails du marque-page</th>
+                            <th>{% trans %}ID{% endtrans %}</th>
+                            <th>{% trans %}URL{% endtrans %}</th>
+                            <th>{% trans %}Commentaire{% endtrans %}</th>
+                            <th>{% trans %}Détails du marque-page{% endtrans %}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,7 +29,7 @@
                                 <td>{{ mpr.url }}</td>
                                 <td>{{ mpr.commentaire }}</td>
                                 <td>
-                                    <a class="btn btn-secondary" href="{{ path('details_marque_page', {'id': mpr.id}) }}">Détails</a>
+                                    <a class="btn btn-secondary" href="{{ path('details_marque_page', {'id': mpr.id}) }}">{% trans %}Détails{% endtrans %}</a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -38,7 +38,7 @@
             </div>
         {% else %}
             <div class="alert alert-info alert-custom" role="alert">
-                Aucun marque-page trouvé.
+                {% trans %}Aucun marque-page trouvé.{% endtrans %}
             </div>
         {% endif %}
     </div>

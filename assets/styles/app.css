@@ -1,10 +1,13 @@
+/* Importation des polices Google */
 @import url('https://fonts.googleapis.com/css?family=Cardo:400i|Rubik:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
 
 :root {
   --transition-duration: 700ms;
   --transition-easing: cubic-bezier(0.19, 1, 0.22, 1);
   --font-sans: 'Rubik', sans-serif;
   --font-serif: 'Cardo', serif;
+  --font-cartoon: 'Comic Neue', sans-serif;
   --card-bg-color: whitesmoke;
   --btn-hover-color: #333;
   --focus-outline-color: yellow;
@@ -14,10 +17,16 @@
   box-sizing: border-box;
 }
 
-html, body {
-  display: grid;
-  place-items: center;
-  font-family: var(--font-sans);
+body, button, input, textarea {
+  font-family: var(--font-cartoon);
+
+}
+input, textarea {
+  margin: 1rem;
+}  
+
+h1, h2, h3, h4, h5, h6 {
+  color: #305f72;
 }
 
 .page-content {
@@ -25,30 +34,30 @@ html, body {
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
   padding: 1rem;
-  margin: auto;
+  width: calc(100% - 2rem); 
 }
 
-.card {
+.card, .card2 {
   position: relative;
   overflow: hidden;
   padding: 1rem;
-  width: 100%;
   text-align: center;
   background-color: var(--card-bg-color);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Simplification de l'ombre */
-  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 15px;
   height: 350px;
   transition: transform var(--transition-duration) var(--transition-easing);
 }
 
-.card:hover {
-  transform: scale(0.95);
+.card img, .card2 img {
+  height: 150px; 
+  object-fit: contain;
+  border-radius: 90%;
 }
 
-.card {
-  background-image: url('chemin/vers/votre/image.jpg');
-  background-size: cover; /* Changement à 'cover' pour couvrir complètement la carte */
-  background-position: center center; /* Simplification de la position de l'image de fond */
+.card:hover, .card2:hover {
+  transform: scale(0.95);
 }
 
 .content {
@@ -61,7 +70,11 @@ html, body {
   color: rgb(0, 0, 0);
   background-color: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(5px);
-  border-radius: 8px; /* Ajout de bord arrondi */
+  border-radius: 8px;
+}
+
+.title, .copy {
+  margin: 0.5rem 0;
 }
 
 .title {
@@ -78,22 +91,11 @@ html, body {
 }
 
 .btn {
-  cursor: pointer;
-  margin-top: 1.5rem;
-  padding: 0.75rem 1.5rem;
-  font-size: 0.9rem; /* Augmentation de la taille de la police */
-  font-weight: bold;
-  letter-spacing: 0.025rem;
-  text-transform: uppercase;
-  color: white;
-  background-color: black;
-  border: none;
-  border-radius: 8px;
-  transition: background-color var(--transition-duration) var(--transition-easing),
-              color var(--transition-duration) var(--transition-easing);
+margin: 1rem;
 }
 
 .btn:hover {
+  transform: scale(1.1);
   background-color: var(--btn-hover-color);
   color: lightgray;
 }
@@ -104,7 +106,7 @@ html, body {
 }
 
 @media (hover: hover) {
-  .card:hover .content {
+  .card:hover .content, .card2:hover .content {
     transform: translateY(-10%);
   }
 }

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ filter is defined and filter is not null ? 'Liste des Livres commençant par la lettre ' ~ filter : 'Liste des Livres' }}
+    {{ filter is defined and filter is not null ? 'Liste des Livres commençant par la lettre ' ~ filter|trans : 'Liste des Livres'|trans }}
 {% endblock %}
 
 {% block head %}
@@ -15,45 +15,45 @@
         <div class="col-md-12">
             <form action="{{ path('livres_index') }}" method="get" class="form-inline">
                 <div class="form-group mr-2">
-                    <select class="form-control" name="auteurId" aria-label="Choisir un auteur">
-                        <option value="">Choisir un auteur</option>
+                    <select class="form-control" name="auteurId" aria-label="{{ 'Choisir un auteur'|trans }}">
+                        <option value="">{{ 'Choisir un auteur'|trans }}</option>
                         {% for auteur in auteurs %}
                             <option value="{{ auteur.id }}" {{ auteur.id == auteurId ? 'selected' : '' }}>{{ auteur.nom }} {{ auteur.prenom }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="form-group mr-2">
-                    <select class="form-control" name="filter" aria-label="Filtrer par la première lettre du titre">
-                        <option value="">Filtrer par la première lettre du titre</option>
+                    <select class="form-control" name="filter" aria-label="{{ 'Filtrer par la première lettre du titre'|trans }}">
+                        <option value="">{{ 'Filtrer par la première lettre du titre'|trans }}</option>
                         {% for lettre in lettres %}
                             <option value="{{ lettre }}" {{ lettre == filter ? 'selected' : '' }}>{{ lettre }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="form-group mr-2">
-                    <select class="form-control" name="minLivres" aria-label="Nombre minimum de livres">
-                        <option value="">Sélectionnez le nombre minimum de livres pris au supérieur</option>
+                    <select class="form-control" name="minLivres" aria-label="{{ 'Nombre minimum de livres'|trans }}">
+                        <option value="">{{ 'Sélectionnez le nombre minimum de livres pris au supérieur'|trans }}</option>
                         {% for option in bookCountOptions %}
                             <option value="{{ option }}" {{ option == minLivres ? 'selected' : '' }}>{{ option }} livre(s)</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="form-group mr-2">
-                    <select class="form-control" name="sortOrder" aria-label="Trier par ordre">
-                        <option value="asc" {{ 'asc' == sortOrder ? 'selected' : '' }}>Croissant</option>
-                        <option value="desc" {{ 'desc' == sortOrder ? 'selected' : '' }}>Décroissant</option>
+                    <select class="form-control" name="sortOrder" aria-label="{{ 'Trier par ordre'|trans }}">
+                        <option value="asc" {{ 'asc' == sortOrder ? 'selected' : '' }}>{{ 'Croissant'|trans }}</option>
+                        <option value="desc" {{ 'desc' == sortOrder ? 'selected' : '' }}>{{ 'Décroissant'|trans }}</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-dark">Filtrer</button>
-                <a href="{{ path('livre_ajout') }}" class="btn btn-secondary">Ajouter un livre</a>
+                <button type="submit" class="btn btn-dark">{{ 'Filtrer'|trans }}</button>
+                <a href="{{ path('livre_ajout') }}" class="btn btn-secondary">{{ 'Ajouter un livre'|trans }}</a>
             </form>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-12">
-            <p>Nombre total de livres : {{ nbLivre }}</p>
-            <p>Nombre de livres affichés : {{ nbFilteredLivre }}</p>
+            <p>{{ 'Nombre total de livres'|trans }} : {{ nbLivre }}</p>
+            <p>{{ 'Nombre de livres affichés'|trans }} : {{ nbFilteredLivre }}</p>
         </div>
     </div>
 
@@ -63,59 +63,59 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Titre</th>
-                            <th>Auteur</th>
-                            <th>Année de parution</th>
-                            <th>Nombre de pages</th>
-                            <th>Genre</th>
-                            <th>ISBN</th>
-                            <th>Action</th> 
+                            <th>{{ 'Titre'|trans }}</th>
+                            <th>{{ 'Auteur'|trans }}</th>
+                            <th>{{ 'Année de parution'|trans }}</th>
+                            <th>{{ 'Nombre de pages'|trans }}</th>
+                            <th>{{ 'Genre'|trans }}</th>
+                            <th>{{ 'ISBN'|trans }}</th>
+                            <th>{{ 'Actions'|trans }}</th> 
                     </thead>
                     <tbody>
                         {% for livre in livres %}
                             <tr>
-                                <td>{{ livre.titre|default('Titre inconnu') }}</td>
+                                <td>{{ livre.titre|default('Titre inconnu'|trans) }}</td>
                                 <td>
                                     {% if livre.auteur is not null %}
                                         {{ livre.auteur.nom }} {{ livre.auteur.prenom }}
                                     {% else %}
-                                        Auteur inconnu
+                                        {{ 'Auteur inconnu'|trans }}
                                     {% endif %}
                                 </td>
                                 <td>
                                     {% if livre.anneeParution is not null %}
                                         {{ livre.anneeParution|date('Y') }}
                                     {% else %}
-                                        Année de parution inconnue
+                                        {{ 'Année de parution inconnue'|trans }}
                                     {% endif %}
                                 </td>
                                 <td>
                                     {% if livre.nombrePages is not null %}
                                         {{ livre.nombrePages }}
                                     {% else %}
-                                        Nombre de pages inconnu
+                                        {{ 'Nombre de pages inconnu'|trans }}
                                     {% endif %}
                                 </td>
                                 <td>
                                     {% if livre.genre is not null %}
                                         {{ livre.genre }}
                                     {% else %}
-                                        Genre inconnu
+                                        {{ 'Genre inconnu'|trans }}
                                     {% endif %}
                                 </td>
                                 <td>
                                     {% if livre.isbn is not null %}
                                         {{ livre.isbn }}
                                     {% else %}
-                                        ISBN inconnu
+                                        {{ 'ISBN inconnu'|trans }}
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <a href="{{ path('detail_livre', {'id': livre.id}) }}" class="btn btn-secondary">Détails</a>
+                                    <a href="{{ path('detail_livre', {'id': livre.id}) }}" class="btn btn-secondary">{{ 'Détails'|trans }}</a>
                                 </td>
                             </tr>
                         {% else %}
-                            <tr><td colspan="7">Aucun livre trouvé.</td></tr>
+                            <tr><td colspan="7">{{ 'Aucun livre trouvé'|trans }}.</td></tr>
                         {% endfor %}
                     </tbody>
                 </table>

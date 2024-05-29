@@ -3,100 +3,231 @@ controllers:
     type: annotation
 
 auteurs_plusieurs_livres:
-    path: '/auteurs/plusieurs-livres'
-    controller: 'App\Controller\SomeController::auteursPlusieursLivres'
-    methods: ['GET'] 
+    path:
+        fr: /{_locale}/auteurs/plusieurs-livres
+        en: /{_locale}/authors/multiple-books
+        es: /{_locale}/autores/varios-libros
+    controller: 'App\Controller\AuteurController::auteursPlusieursLivres'
+    methods: ['GET']
+    requirements:
+        _locale: fr|en|es
 
 nombre_livres:
-    path: '/nombre-livres'
-    controller: 'App\Controller\SomeController::nombreLivres'
+    path:
+        fr: /{_locale}/nombre-livres
+        en: /{_locale}/book-count
+        es: /{_locale}/cantidad-libros
+    controller: 'App\Controller\LivreController::nombreLivres'
     methods: ['GET']
+    requirements:
+        _locale: fr|en|es
 
 livres_index:
-    path: '/livres'
+    path:
+        fr: /{_locale}/livres
+        en: /{_locale}/books
+        es: /{_locale}/libros
     controller: 'App\Controller\LivreController::index'
     methods: ['GET']
+    requirements:
+        _locale: fr|en|es
 
-livres_liste: 
-    path: '/livres/liste' 
+livres_liste:
+    path:
+        fr: /{_locale}/livres/liste
+        en: /{_locale}/books/list
+        es: /{_locale}/libros/lista
     controller: 'App\Controller\LivreController::index'
     methods: ['GET']
+    requirements:
+        _locale: fr|en|es
 
-auteurs_modif: 
-    path: '/auteurs/modif/{id}'
+auteurs_modif:
+    path:
+        fr: /{_locale}/auteurs/modif/{id}
+        en: /{_locale}/authors/edit/{id}
+        es: /{_locale}/autores/modif/{id}
     controller: 'App\Controller\AuteurController::modifierAuteur'
     methods: ['GET', 'POST']
+    requirements:
+        _locale: fr|en|es
+
+employe_ajout:
+    path:
+        fr: /{_locale}/employes/ajout
+        en: /{_locale}/employees/add
+        es: /{_locale}/empleados/agregar
+    controller: 'App\Controller\EmployeController::ajout'
+    methods: ['GET', 'POST']
+    requirements:
+        _locale: fr|en|es
 
 ajout_succes:
-    path: '/ajout-succes' 
+    path:
+        fr: /{_locale}/ajout-succes
+        en: /{_locale}/add-success
+        es: /{_locale}/agregar-exito
     controller: 'App\Controller\AuteurController::ajoutSucces'
-    methods: ['GET'] 
+    methods: ['GET']
+    requirements:
+        _locale: fr|en|es
 
 auteurs_index:
-    path: '/auteurs'
+    path:
+        fr: /{_locale}/auteurs
+        en: /{_locale}/authors
+        es: /{_locale}/autores
     controller: 'App\Controller\AuteurController::index'
     methods: ['GET']
+    requirements:
+        _locale: fr|en|es
 
-details_auteur: 
-    path: '/auteurs/{id}' 
+details_auteur:
+    path:
+        fr: /{_locale}/auteurs/{id}
+        en: /{_locale}/authors/{id}
+        es: /{_locale}/autores/{id}
     controller: 'App\Controller\AuteurController::detail'
     methods: ['GET']
+    requirements:
+        _locale: fr|en|es
 
 employes_index:
-    path: '/employes'
+    path:
+        fr: /{_locale}/employes
+        en: /{_locale}/employees
+        es: /{_locale}/empleados
     controller: 'App\Controller\EmployeController::index'
     methods: ['GET']
+    requirements:
+        _locale: fr|en|es
 
-app_ajout_succes:
-    path: '/employe/ajout-succes'
-    controller: 'App\Controller\VotreController::votreAction'
+employe_ajout_succes:
+    path:
+        fr: /{_locale}/employe/ajout-succes
+        en: /{_locale}/employee/add-success
+        es: /{_locale}/empleado/agregar-exito
+    controller: 'App\Controller\EmployeController::ajoutSucces'
     methods: ['GET']
+    requirements:
+        _locale: fr|en|es
 
 app_employe:
-    path: '/employe'
+    path:
+        fr: /{_locale}/employe
+        en: /{_locale}/employee
+        es: /{_locale}/empleado
     controller: 'App\Controller\EmployeController::index'
     methods: ['GET']
+    requirements:
+        _locale: fr|en|es
 
-lecailloux_faune:
-    path: '/lecailloux/faune'
-    controller: 'App\Controller\LecaillouxController::fauneAction'
+faune:
+    path:
+        fr: /{_locale}/faune
+        en: /{_locale}/fauna
+        es: /{_locale}/fauna
+    controller: 'App\Controller\LeCaillouxController::afficherTableFaune'
     methods: ['GET']
+    requirements:
+        _locale: fr|en|es
 
-lecailloux_flore:
-    path: '/lecailloux/flore'
-    controller: 'App\Controller\LecaillouxController::flore'
+flore:
+    path:
+        fr: /{_locale}/flore
+        en: /{_locale}/flora
+        es: /{_locale}/flora
+    controller: 'App\Controller\LeCaillouxController::afficherTableFlore'
     methods: ['GET']
+    requirements:
+        _locale: fr|en|es
 
-marque-pages_index:
-    path: '/marque-pages'
+marque_pages_index:
+    path:
+        fr: /{_locale}/marque-pages
+        en: /{_locale}/bookmarks
+        es: /{_locale}/marcadores
     controller: 'App\Controller\MarquePageController::index'
     methods: ['GET']
+    requirements:
+        _locale: fr|en|es
 
-marque_page_details:
-    path: '/marque-pages/details/{id}'
+details_marque_page:
+    path:
+        fr: /{_locale}/marque-pages/details/{id}
+        en: /{_locale}/bookmark/details/{id}
+        es: /{_locale}/marcador/detalles/{id}
     controller: 'App\Controller\MarquePageController::details'
     methods: ['GET']
+    requirements:
+        _locale: fr|en|es
 
 nouveau_marque_page:
-    path: '/marque-page/ajouter'
+    path:
+        fr: /{_locale}/marque-pages/ajouter
+        en: /{_locale}/bookmarks/add
+        es: /{_locale}/marcadores/agregar
     controller: 'App\Controller\MarquePageController::ajout'
     methods: ['GET', 'POST']
+    requirements:
+        _locale: fr|en|es
 
-details_route:
-    path: '/details/{id}'
-    controller: 'App\Controller\MarquePageController::details'
-    methods: ['GET']
-marque_pages_index:
-    path: '/marque-pages'
-    controller: 'App\Controller\MarquePageController::index'
-    methods: ['GET']
-details_marque_page:
-    path: '/details/{id}'
-    controller: App\Controller\MarquePageController::details
-# config/routes.yaml
 page_precedente:
-    path: /page-precedente
-    controller: App\Controller\YourControllerNameController::pagePrecedente
+    path:
+        fr: /{_locale}/page-precedente
+        en: /{_locale}/previous-page
+        es: /{_locale}/pagina-anterior
+    controller: 'App\Controller\VotreController::pagePrecedente'
+    methods: ['GET']
+    requirements:
+        _locale: fr|en|es
+
 marquepage_modif_succes:
-    path: /modif-succes
-    controller: App\Controller\MarquePageController::modifSucces
+    path:
+        fr: /{_locale}/marque-pages/modif-succes
+        en: /{_locale}/bookmarks/modif-success
+        es: /{_locale}/marcadores/modificar-exito
+    controller: 'App\Controller\MarquePageController::modifSucces'
+    methods: ['GET']
+    requirements:
+        _locale: fr|en|es
+
+marquepage_ajout:
+    path:
+        fr: /{_locale}/marque-pages/ajout
+        en: /{_locale}/bookmarks/add
+        es: /{_locale}/marcadores/agregar
+    controller: 'App\Controller\MarquePageController::ajout'
+    methods: ['GET', 'POST']
+    requirements:
+        _locale: fr|en|es
+
+marquepage_ajout_succes:
+    path:
+        fr: /{_locale}/marque-pages/ajout-succes
+        en: /{_locale}/bookmarks/add-success
+        es: /{_locale}/marcadores/agregar-exito
+    controller: 'App\Controller\MarquePageController::ajoutSucces'
+    methods: ['GET']
+    requirements:
+        _locale: fr|en|es
+
+marquepage_modif:
+    path:
+        fr: /{_locale}/marque-pages/modif/{id}
+        en: /{_locale}/bookmarks/edit/{id}
+        es: /{_locale}/marcadores/modif/{id}
+    controller: 'App\Controller\MarquePageController::modifier'
+    methods: ['GET', 'POST']
+    requirements:
+        _locale: fr|en|es
+
+modifier_livre:
+    path: 
+        fr: /{_locale}/livres/modifier/{id}
+        en: /{_locale}/books/edit/{id}
+        es: /{_locale}/libros/modificar/{id}
+    controller: 'App\Controller\LivreController::modifier'
+    methods: ['GET', 'POST']
+    requirements:
+        _locale: fr|en|es

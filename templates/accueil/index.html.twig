@@ -1,34 +1,45 @@
-{# templates/accueil/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Trending Games{% endblock %}
+{% block title %}{{ 'Liste des Ressources'|trans }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+    <style>
+        .card-img-container {
+            height: 90px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
     {% set cards = [
-    { title: 'Marque-pages', button: 'Voir', route: 'marque-pages_index', image: 'img/accueil/1f516.svg' },
-    { title: 'Livres', button: 'Voir', route: 'livres_index', image: 'img/accueil/1f4da.svg' },
-    { title: 'Auteurs', button: 'Voir', route: 'auteurs_index', image: 'img/accueil/2712.svg' },
-    { title: 'Faune', button: 'Voir', route: 'lecailloux_faune', image: 'img/accueil/1f98c.svg' },
-    { title: 'Flore', button: 'Voir', route: 'lecailloux_flore', image: 'img/accueil/1f33c.svg' },
-    { title: 'Employes', button: 'Voir', route: 'employes_index', image: 'img/accueil/1f9d1-1f4bc.svg' }
-] %}
+        { title: 'Marque-pages'|trans, button: 'Voir'|trans, route: 'marque_pages_index', image: 'img/accueil/1f516.svg' },
+        { title: 'Livres'|trans, button: 'Voir'|trans, route: 'livres_index', image: 'img/accueil/1f4da.svg' },
+        { title: 'Auteurs'|trans, button: 'Voir'|trans, route: 'auteurs_index', image: 'img/accueil/2712.svg' },
+        { title: 'Faune'|trans, button: 'Voir'|trans, route: 'faune', image: 'img/accueil/1f98c.svg' },
+        { title: 'Flore'|trans, button: 'Voir'|trans, route: 'flore', image: 'img/accueil/1f33c.svg' },
+        { title: 'Employés'|trans, button: 'Voir'|trans, route: 'employes_index', image: 'img/accueil/1f9d1-1f4bc.svg' }
+    ] %}
 
-
-    <main class="page-content">
-        {% for card in cards %}
-            <article class="card card-background" style="background-image: url('{{ asset(card.image) }}');">
-                <header>
-                    <h2 class="title">{{ card.title }}</h2>
-                </header>
-                <footer>
-                    <a href="{{ path(card.route) }}"><button class="btn" aria-label="Voir {{ card.title }}">{{ card.button }}</button></a>
-                </footer>
-            </article>
-        {% endfor %}
+    <main class="container mt-5">
+        <div class="row">
+            {% for card in cards %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-img-container" style="background-image: url('{{ asset(card.image) }}');"></div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-center">{{ card.title }}</h5>
+                            <div class="mt-auto text-center">
+                                <a href="{{ path(card.route, {'_locale': app.request.locale}) }}" class="btn btn-secondary">{{ card.button }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </main>
 {% endblock %}

@@ -1,12 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Modifier le marque-page
+    {% trans %}Modifier le marque-page{% endtrans %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('styles/details.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
     <div class="container">
-        <h1>Modifier le marque-page</h1>
+        <h1>{% trans %}Modifier le marque-page{% endtrans %}</h1>
 
         <div class="row mt-4">
             <div class="col-md-6">
@@ -14,29 +19,29 @@
 
                 {# Champ pour l'URL #}
                 <div class="form-group">
-                    {{ form_label(form.url, 'URL', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_label(form.url, 'URL'|trans, {'label_attr': {'class': 'form-label'}}) }}
                     {{ form_widget(form.url, {'attr': {'class': 'form-control'}}) }}
                 </div>
 
                 {# Champ pour les mots-clés #}
                 <div class="form-group">
-                    {{ form_label(form.motsCles, 'Mots-clés', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_label(form.motsCles, 'Mots-clés'|trans, {'label_attr': {'class': 'form-label'}}) }}
                     {{ form_widget(form.motsCles, {'attr': {'class': 'form-control'}}) }}
                 </div>
 
                 {# Champ pour ajouter un nouveau mot-clé #}
                 <div class="form-group">
-                    <label for="new_motCle" class="form-label">Ajouter un nouveau mot-clé</label>
-                    <input type="text" id="new_motCle" name="new_motCle" class="form-control" placeholder="Entrez un nouveau mot-clé" />
+                    <label for="new_motCle" class="form-label">{% trans %}Ajouter un nouveau mot-clé{% endtrans %}</label>
+                    <input type="text" id="new_motCle" name="new_motCle" class="form-control" placeholder="{% trans %}Entrez un nouveau mot-clé{% endtrans %}" />
                 </div>
 
                 {# Bouton de soumission du formulaire #}
-                <button type="submit" class="btn btn-primary">Modifier</button>
+                <button type="submit" class="btn btn-primary">{% trans %}Modifier{% endtrans %}</button>
 
                 {{ form_end(form) }}
 
                 {# Bouton de retour #}
-                <a href="{{ path('marque_pages_index') }}" class="btn btn-dark">Retour à la liste</a>
+                <a href="{{ path('marque_pages_index') }}" class="btn btn-dark">{% trans %}Retour à la liste{% endtrans %}</a>
             </div>
         </div>
     </div>

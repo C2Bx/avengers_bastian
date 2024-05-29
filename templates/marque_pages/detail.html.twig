@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détails du Marque-Page{% endblock %}
+{% block title %}{% trans %}Détails du Marque-Page{% endtrans %}{% endblock %}
 
 {% block head %}
     {# Assurez-vous que le fichier CSS existe et est correctement lié dans votre base.html.twig ou ici directement #}
@@ -9,35 +9,35 @@
 
 {% block body %}
 <div class="container mt-5">
-    <h1 class="mb-4 text-secondary">Détails du Marque-Page</h1>
+    <h1 class="mb-4 text-secondary">{% trans %}Détails du Marque-Page{% endtrans %}</h1>
 
     <section class="details-section">
         <table class="table table-striped details-table">
             <thead class="thead-light">
             <tr>
-                <th scope="col">Libellé</th>
-                <th scope="col">Valeur</th>
+                <th scope="col">{% trans %}Libellé{% endtrans %}</th>
+                <th scope="col">{% trans %}Valeur{% endtrans %}</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <th scope="row">ID</th>
+                <th scope="row">{% trans %}ID{% endtrans %}</th>
                 <td>{{ marquePage.id }}</td>
             </tr>
             <tr>
-                <th scope="row">URL</th>
+                <th scope="row">{% trans %}URL{% endtrans %}</th>
                 <td><a href="{{ marquePage.url }}" target="_blank">{{ marquePage.url }}</a></td>
             </tr>
             <tr>
-                <th scope="row">Commentaire</th>
+                <th scope="row">{% trans %}Commentaire{% endtrans %}</th>
                 <td>{{ marquePage.commentaire }}</td>
             </tr>
             <tr>
-                <th scope="row">Date de Création</th>
+                <th scope="row">{% trans %}Date de Création{% endtrans %}</th>
                 <td>{{ marquePage.dateCreation|date('d/m/Y H:i') }}</td>
             </tr>
             <tr>
-                <th scope="row">Mots Clés</th>
+                <th scope="row">{% trans %}Mots Clés{% endtrans %}</th>
                 <td>
                     {% if marquePage.getMotsCles|length > 0 %}
                         <ul class="list-unstyled">
@@ -46,14 +46,14 @@
                             {% endfor %}
                         </ul>
                     {% else %}
-                        Aucun mot clé.
+                        {% trans %}Aucun mot clé.{% endtrans %}
                     {% endif %}
                 </td>
             </tr>
             </tbody>
         </table>
     </section>
-    <a href="{{ path('marquepage_modifier', {'id': marquePage.id}) }}" class="btn btn-primary">Modifier</a>
-    <a href="{{ path('marque_pages_index') }}" class="btn btn-dark">Retour à la liste</a>
+    <a href="{{ path('marquepage_modifier', {'id': marquePage.id}) }}" class="btn btn-primary">{% trans %}Modifier{% endtrans %}</a>
+    <a href="{{ path('marque_pages_index') }}" class="btn btn-dark">{% trans %}Retour à la liste{% endtrans %}</a>
 </div>
 {% endblock %}

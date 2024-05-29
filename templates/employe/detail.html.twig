@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détails de l'Employé{% endblock %}
+{% block title %}{{ 'Détails de l\'Employé'|trans }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -9,41 +9,41 @@
 
 {% block body %}
 <div class="container mt-5">
-    <h1 class="mb-4">Détails de l'Employé</h1>
+    <h1 class="mb-4">{{ 'Détails de l\'Employé'|trans }}</h1>
 
     {% if employe is defined %}
         <section>
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">{{ employe.prenom|default('Prénom inconnu') }} {{ employe.nom|default('Nom inconnu') }}</h5>
-                    <p class="card-text">Informations sur l'employé.</p>
+                    <h5 class="card-title">{{ employe.prenom|default('Prénom inconnu'|trans) }} {{ employe.nom|default('Nom inconnu'|trans) }}</h5>
+                    <p class="card-text">{{ 'Informations sur l\'employé.'|trans }}</p>
 
                     <table class="table">
                         <tbody>
                             <tr>
-                                <th scope="row">ID</th>
-                                <td>{{ employe.id|default('ID inconnu') }}</td>
+                                <th scope="row">{{ 'ID'|trans }}</th>
+                                <td>{{ employe.id|default('ID inconnu'|trans) }}</td>
                             </tr>
                             <tr>
-                                <th scope="row">Prénom</th>
-                                <td>{{ employe.prenom|default('Prénom inconnu') }}</td>
+                                <th scope="row">{{ 'Prénom'|trans }}</th>
+                                <td>{{ employe.prenom|default('Prénom inconnu'|trans) }}</td>
                             </tr>
                             <tr>
-                                <th scope="row">Nom</th>
-                                <td>{{ employe.nom|default('Nom inconnu') }}</td>
+                                <th scope="row">{{ 'Nom'|trans }}</th>
+                                <td>{{ employe.nom|default('Nom inconnu'|trans) }}</td>
                             </tr>
                             {% if employe.adresse is defined %}
                                 <tr>
-                                    <th scope="row">Rue</th>
-                                    <td>{{ employe.adresse.rue|default('Rue inconnue') }}</td>
+                                    <th scope="row">{{ 'Rue'|trans }}</th>
+                                    <td>{{ employe.adresse.rue|default('Rue inconnue'|trans) }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Ville</th>
-                                    <td>{{ employe.adresse.ville|default('Ville inconnue') }}</td>
+                                    <th scope="row">{{ 'Ville'|trans }}</th>
+                                    <td>{{ employe.adresse.ville|default('Ville inconnue'|trans) }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Code Postal</th>
-                                    <td>{{ employe.adresse.codePostal|default('Code Postal inconnu') }}</td>
+                                    <th scope="row">{{ 'Code Postal'|trans }}</th>
+                                    <td>{{ employe.adresse.codePostal|default('Code Postal inconnu'|trans) }}</td>
                                 </tr>
                             {% endif %}
                         </tbody>
@@ -52,11 +52,11 @@
             </div>
         </section>
         <div class="mt-3">
-            <a href="{{ path('employes_index') }}" class="btn btn-dark">Retour à la liste</a>
-            <a href="{{ path('modifier_employe', {'id': employe.id}) }}" class="btn btn-secondary">Modifier</a>
+            <a href="{{ path('employes_index') }}" class="btn btn-dark">{{ 'Retour à la liste'|trans }}</a>
+            <a href="{{ path('modifier_employe', {'id': employe.id}) }}" class="btn btn-secondary">{{ 'Modifier'|trans }}</a>
         </div>
     {% else %}
-        <p>Aucun employé trouvé.</p>
+        <p>{{ 'Aucun employé trouvé.'|trans }}</p>
     {% endif %}
 </div>
 {% endblock %}

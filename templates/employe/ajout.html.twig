@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% set pageTitle = mode == 'ajouter' ? 'Ajouter un employé' : 'Modifier un employé' %}
-{% set actionButton = mode == 'ajouter' ? 'Ajouter' : 'Modifier' %}
+{% set pageTitle = mode == 'ajouter' ? 'Ajouter un employé'|trans({'Ajouter un employé': 'Add an employee', 'Ajouter un employé': 'Añadir un empleado'}) : 'Modifier un employé'|trans({'Modifier un employé': 'Edit an employee', 'Modifier un employé': 'Editar un empleado'}) %}
+{% set actionButton = mode == 'ajouter' ? 'Ajouter'|trans({'Ajouter': 'Add', 'Ajouter': 'Añadir'}) : 'Modifier'|trans({'Modifier': 'Edit', 'Modifier': 'Editar'}) %}
 
 {% block title %}{{ pageTitle }}{% endblock %}
 
@@ -11,7 +11,7 @@
 
     {{ form_start(form) }}
         <div class="form-group">
-            {{ form_label(form.prenom, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_label(form.prenom, 'Prénom'|trans({'Prénom': 'First Name', 'Prénom': 'Nombre'}), {'label_attr': {'class': 'form-label'}}) }}
             {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
             {% if form_errors(form.prenom) %}
                 <div class="alert alert-danger" role="alert">
@@ -21,7 +21,7 @@
         </div>
 
         <div class="form-group">
-            {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_label(form.nom, 'Nom'|trans({'Nom': 'Last Name', 'Nom': 'Apellido'}), {'label_attr': {'class': 'form-label'}}) }}
             {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
             {% if form_errors(form.nom) %}
                 <div class="alert alert-danger" role="alert">
@@ -30,12 +30,10 @@
             {% endif %}
         </div>
 
-        {# Ici, form.adresse est traité comme un sous-formulaire. 
-           Assurez-vous que le type de formulaire AdresseType est bien configuré pour inclure les champs nécessaires. #}
         {{ form_widget(form.adresse) }}
 
         <button type="submit" class="btn btn-secondary mt-3">{{ actionButton }}</button>
-        <a href="{{ path('employes_index') }}" class="btn btn-dark mt-3">Retour à la liste</a>
+        <a href="{{ path('employes_index') }}" class="btn btn-dark mt-3">{{ 'Retour à la liste'|trans({'Retour à la liste': 'Back to the list', 'Retour à la liste': 'Volver a la lista'}) }}</a>
     {{ form_end(form) }}
 </div>
 {% endblock %}

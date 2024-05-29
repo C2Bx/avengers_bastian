@@ -1,15 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier un nouvel auteur{% endblock %}
+{% block title %}{{ 'Modifier un nouvel auteur'|trans }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+{% endblock %}
 
 {% block body %}
     <div class="container">
-        <h1 class="mt-5">Modifier un nouvel auteur</h1>
+        <h1 class="mt-5">{{ 'Modifier un nouvel auteur'|trans }}</h1>
         <div class="row mt-4">
             <div class="col-md-6">
                 {{ form_start(form) }}
                 <div class="mb-3">
-                    {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_label(form.nom, 'Nom'|trans, {'label_attr': {'class': 'form-label'}}) }}
                     {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
                     {% if form_errors(form.nom) %}
                         <div class="alert alert-danger" role="alert">
@@ -18,7 +24,7 @@
                     {% endif %}
                 </div>
                 <div class="mb-3">
-                    {{ form_label(form.prenom, 'Prénom', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_label(form.prenom, 'Prénom'|trans, {'label_attr': {'class': 'form-label'}}) }}
                     {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
                     {% if form_errors(form.prenom) %}
                         <div class="alert alert-danger" role="alert">
@@ -26,8 +32,8 @@
                         </div>
                     {% endif %}
                 </div>
-                <button type="submit" class="btn btn-secondary">Modifier</button>
-                <a href="{{ path('app_auteur') }}" class="btn btn-dark">Retour à la liste</a>
+                <button type="submit" class="btn btn-secondary">{{ 'Modifier'|trans }}</button>
+                <a href="{{ path('app_auteur') }}" class="btn btn-dark">{{ 'Retour à la liste'|trans }}</a>
                 {{ form_end(form) }}
             </div>
         </div>

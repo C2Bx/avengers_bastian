@@ -13,7 +13,7 @@ use App\Form\Type\AuteurType;
 
 class AuteurController extends AbstractController
 {
-    #[Route('/auteurs', name: 'app_auteur')]
+    #[Route('/{_locale}/auteurs', name: 'app_auteur')]
     public function index(Request $request, AuteurRepository $auteurRepository): Response
     {
         $auteurId = $request->query->get('auteurId');
@@ -45,7 +45,7 @@ class AuteurController extends AbstractController
         ]);
     }
 
-    #[Route('/auteurs/detail/{id}', name: 'detail_auteur', methods: ['GET'])]
+    #[Route('/{_locale}/auteurs/detail/{id}', name: 'detail_auteur', methods: ['GET'])]
     public function detail(EntityManagerInterface $entityManager, int $id): Response
     {
         $auteur = $entityManager->getRepository(Auteur::class)->find($id);
@@ -59,7 +59,7 @@ class AuteurController extends AbstractController
         ]);
     }
 
-    #[Route('/auteurs/ajout', name: 'auteur_ajout')]
+    #[Route('/{_locale}/auteurs/ajout', name: 'auteur_ajout')]
     public function ajout(Request $request, EntityManagerInterface $entityManager): Response
     {
         $auteur = new Auteur();
@@ -78,7 +78,7 @@ class AuteurController extends AbstractController
         ]);
     }
 
-    #[Route("/auteurs/modifier/{id}", name: "auteur_modif")]
+    #[Route("/{_locale}/auteurs/modifier/{id}", name: "auteur_modif")]
     public function modifierAuteur(Request $request, EntityManagerInterface $entityManager, $id): Response
     {
         $auteur = $entityManager->getRepository(Auteur::class)->find($id);
@@ -102,7 +102,7 @@ class AuteurController extends AbstractController
         ]);
     }
 
-    #[Route('/auteurs/ajout_succes', name: 'auteur_ajout_succes')]
+    #[Route('/{_locale}/auteurs/ajout_succes', name: 'auteur_ajout_succes')]
     public function ajoutSucces(Request $request): Response
     {
         $auteurAjoute = $request->query->get('ajout');

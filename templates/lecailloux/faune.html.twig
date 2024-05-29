@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Faune{% endblock %}
+{% block title %}{{ 'Faune'|trans }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -9,13 +9,13 @@
 
 {% block body %}
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Faune</h1>
+    <h1 class="text-center mb-4">{{ 'Faune'|trans }}</h1>
     <div class="row">
         {% if faune is not empty %}
             {% for animal in faune %}
                 <div class="col-md-4 mb-3">
                     <div class="card">
-                        <img src="{{ asset(animal.img) }}" class="card-img-top" alt="Image de faune">
+                        <img src="{{ asset(animal.img) }}" class="card-img-top" alt="{{ 'Image de faune'|trans }}">
                         <div class="card-body">
                             <p class="card-text">{{ animal.commentaire }}</p>
                         </div>
@@ -23,7 +23,7 @@
                 </div>
             {% endfor %}
         {% else %}
-            <div class="alert alert-info">Aucun animal trouvé.</div>
+            <div class="alert alert-info">{{ 'Aucun animal trouvé.'|trans }}</div>
         {% endif %}
     </div>
 </div>

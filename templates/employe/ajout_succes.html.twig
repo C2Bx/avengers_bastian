@@ -1,14 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Succès{% endblock %}
+{% block title %}
+    {% trans %}Succès{% endtrans %}
+{% endblock %}
 
 {% block body %}
     {% if employeAjoute %}
-        <h1>Employé ajouté avec succès !</h1>
-        <p>Merci d'avoir ajouté un employé.</p>
+        <h1>{% trans %}Employé ajouté avec succès !{% endtrans %}</h1>
+        <p>{% trans %}Merci d'avoir ajouté un employé.{% endtrans %}</p>
     {% elseif employeModifie %}
-        <h1>Employé modifié avec succès !</h1>
-        <p>Merci d'avoir modifié un employé.</p>
+        <h1>{% trans %}Employé modifié avec succès !{% endtrans %}</h1>
+        <p>{% trans %}Merci d'avoir modifié un employé.{% endtrans %}</p>
     {% endif %}
-    <a href="{{ retour_url }}">Retour à la liste des employés</a>
+    <a href="{{ retour_url }}">
+        {% trans %}Retour à la liste des employés{% endtrans %}
+    </a>
 {% endblock %}

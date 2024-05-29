@@ -13,23 +13,35 @@
             <div class="col-md-6">
                 {{ form_start(form) }}
 
-                {# Génération des champs de formulaire avec une boucle pour réduire la répétition #}
-                {% for field in [form.titre, form.anneeParution, form.nombrePages] %}
-                    <div class="mb-3">
-                        {{ form_label(field, null, {'label_attr': {'class': 'form-label'}}) }}
-                        {{ form_widget(field, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(field) }} {# Afficher les éventuelles erreurs de validation #}
-                    </div>
-                {% endfor %}
-
-                {# Champ de sélection de l'auteur avec un placeholder #}
+                {# Title field #}
                 <div class="mb-3">
-                    {{ form_label(form.auteur, 'Auteur', {'label_attr': {'class': 'form-label'}}) }}
-                    {{ form_widget(form.auteur, {'attr': {'class': 'form-control'}, 'placeholder': 'Choisir un auteur'}) }}
-                    {{ form_errors(form.auteur) }} {# Afficher les éventuelles erreurs de validation #}
+                    {{ form_label(form.titre, 'Titre', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.titre, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.titre) }}
                 </div>
 
-                {# Boutons de soumission et retour #}
+                {# Year of publication field #}
+                <div class="mb-3">
+                    {{ form_label(form.anneeParution, 'Année de parution', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.anneeParution, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.anneeParution) }}
+                </div>
+
+                {# Number of pages field #}
+                <div class="mb-3">
+                    {{ form_label(form.nombrePages, 'Nombre de pages', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.nombrePages, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.nombrePages) }}
+                </div>
+
+                {# Author selection field with a placeholder #}
+                <div class="mb-3">
+                    {{ form_label(form.auteur, 'Auteur', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.auteur, {'attr': {'class': 'form-control', 'placeholder': 'Choisir un auteur'}}) }}
+                    {{ form_errors(form.auteur) }}
+                </div>
+
+                {# Submission and back buttons #}
                 <button type="submit" class="btn btn-secondary">{{ actionButton }}</button>
                 <a href="{{ path('livres_index') }}" class="btn btn-dark">Retour à la liste</a>
 

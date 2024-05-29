@@ -13,32 +13,24 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EmployeController extends AbstractController
 {
-    #[Route('/employes', name: 'employes_index', methods: ['GET'])]
-public function index(Request $request, EmployeRepository $employeRepository): Response
-{
-    // Récupérer tous les employés pour peupler la liste déroulante "Choisir un employé".
-    $allEmployes = $employeRepository->findAll();
+    #[Route('/{_locale}/employes', name: 'employes_index', methods: ['GET'])]
+    public function index(Request $request, EmployeRepository $employeRepository): Response
+    {
+        $allEmployes = $employeRepository->findAll();
+        $filterNom = $request->query->get('filterNom', '');
+        $sortOrder = $request->query->get('sortOrder', 'ASC');
+        $criteria = !empty($filterNom) ? ['nom' => $filterNom] : [];
+        $filteredEmployes = $employeRepository->findBy($criteria, ['nom' => $sortOrder]);
 
-    // Récupérer les paramètres de filtrage depuis la requête.
-    $filterNom = $request->query->get('filterNom', '');
-    $sortOrder = $request->query->get('sortOrder', 'ASC');
+        return $this->render('employe/index.html.twig', [
+            'employes' => $filteredEmployes,
+            'allEmployes' => $allEmployes,
+            'filterNom' => $filterNom,
+            'sortOrder' => $sortOrder,
+        ]);
+    }
 
-    // Déterminer les critères de filtrage en fonction du nom.
-    $criteria = !empty($filterNom) ? ['nom' => $filterNom] : [];
-
-    // Appliquer le filtre et obtenir la liste des employés.
-    $filteredEmployes = $employeRepository->findBy($criteria, ['nom' => $sortOrder]);
-
-    return $this->render('employe/index.html.twig', [
-        'employes' => $filteredEmployes,
-        'allEmployes' => $allEmployes,
-        'filterNom' => $filterNom,
-        'sortOrder' => $sortOrder,
-    ]);
-}
-
-
-    #[Route('/employes/detail/{id}', name: 'detail_employe', methods: ['GET'])]
+    #[Route('/{_locale}/employes/detail/{id}', name: 'detail_employe', methods: ['GET'])]
     public function detail(EmployeRepository $employeRepository, int $id): Response
     {
         $employe = $employeRepository->find($id);
@@ -48,25 +40,26 @@ public function index(Request $request, EmployeRepository $employeRepository): R
         return $this->render('employe/detail.html.twig', ['employe' => $employe]);
     }
 
-    #[Route('/employes/ajout', name: 'employe_ajout', methods: ['GET', 'POST'])]
+    #[Route('/{_locale}/employes/ajout', name: 'employe_ajout', methods: ['GET', 'POST'])]
     public function ajout(Request $request, EntityManagerInterface $entityManager): Response
     {
         $employe = new Employe();
         $form = $this->createForm(EmployeType::class, $employe);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($employe);
             $entityManager->flush();
-            return $this->redirectToRoute('employe_ajout_succes');
+            return $this->redirectToRoute('employe_ajout_succes', ['employeAjoute' => true]);
         }
+
         return $this->render('employe/ajout.html.twig', [
             'form' => $form->createView(),
+            'mode' => 'ajouter',
         ]);
     }
 
-    #[Route("/employes/modifier/{id}", name: "modifier_employe", methods: ['GET', 'POST'])]
+    #[Route("/{_locale}/employes/modifier/{id}", name: "modifier_employe", methods: ['GET', 'POST'])]
     public function modifier(Request $request, EntityManagerInterface $entityManager, int $id): Response
     {
         $employe = $entityManager->getRepository(Employe::class)->find($id);
@@ -77,25 +70,29 @@ public function index(Request $request, EmployeRepository $employeRepository): R
         $form = $this->createForm(EmployeType::class, $employe);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() and $form->isValid()) {
             $entityManager->flush();
-            return $this->redirectToRoute('employe_ajout_succes');
+            return $this->redirectToRoute('employe_ajout_succes', ['employeModifie' => true]);
         }
 
         return $this->render('employe/modif.html.twig', [
             'form' => $form->createView(),
             'employe' => $employe,
+            'mode' => 'modifier',
         ]);
     }
 
-    #[Route('/employes/ajout_succes', name: 'employe_ajout_succes')]
-    public function ajoutSucces(): Response
+    #[Route('/{_locale}/employes/ajout_succes', name: 'employe_ajout_succes')]
+    public function ajoutSucces(Request $request): Response
     {
+        $employeAjoute = $request->query->get('employeAjoute', false);
+        $employeModifie = $request->query->get('employeModifie', false);
         $retourUrl = $this->generateUrl('employes_index');
-        $employeAjoute = true;
+
         return $this->render('employe/ajout_succes.html.twig', [
             'retour_url' => $retourUrl,
-            'employeAjoute' => $employeAjoute
+            'employeAjoute' => $employeAjoute,
+            'employeModifie' => $employeModifie
         ]);
     }
 }

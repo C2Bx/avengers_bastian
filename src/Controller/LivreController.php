@@ -15,7 +15,7 @@ use App\Form\Type\LivreType;
 
 class LivreController extends AbstractController
 {
-    #[Route('/livres', name: 'livres_index', methods: ['GET'])]
+    #[Route('/{_locale}/livres', name: 'livres_index', methods: ['GET'])]
     public function index(Request $request, EntityManagerInterface $entityManager, AuteurRepository $auteurRepository, LivreRepository $livreRepository): Response
     {
         $filter = $request->query->get('filter');
@@ -88,7 +88,7 @@ class LivreController extends AbstractController
         ]);
     }
 
-    #[Route('/livres/detail/{id}', name: 'detail_livre', methods: ['GET'])]
+    #[Route('/{_locale}/livres/detail/{id}', name: 'detail_livre', methods: ['GET'])]
     public function detail(EntityManagerInterface $entityManager, int $id): Response
     {
         $livre = $entityManager->getRepository(Livre::class)->find($id);
@@ -102,7 +102,7 @@ class LivreController extends AbstractController
         ]);
     }
 
-    #[Route('/livres/ajout', name: 'livre_ajout')]
+    #[Route('/{_locale}/livres/ajout', name: 'livre_ajout')]
     public function ajout(Request $request, EntityManagerInterface $entityManager): Response
     {
         $livre = new Livre();
@@ -122,9 +122,8 @@ class LivreController extends AbstractController
         ]);
     }
 
-    #[Route("/livre/modifier/{id}", name: "modifier_livre")]
-    public function modifierLivre(Request $request, EntityManagerInterface $entityManager, $id): Response
-    {
+    #[Route('/{_locale}/livres/modifier/{id}', name: 'modifier_livre')]
+    public function modifier(Request $request, EntityManagerInterface $entityManager, $id): Response    {
         $livre = $entityManager->getRepository(Livre::class)->find($id);
 
         if (!$livre) {
@@ -147,7 +146,7 @@ class LivreController extends AbstractController
         ]);
     }
 
-    #[Route('/livres/ajout_succes', name: 'livre_ajout_succes')]
+    #[Route('/{_locale}/livres/ajout_succes', name: 'livre_ajout_succes')]
     public function ajoutSucces(Request $request): Response
     {
         $livreAjoute = $request->query->get('ajout');

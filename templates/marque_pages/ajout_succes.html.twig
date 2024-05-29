@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Succès{% endblock %}
+{% block title %}{% trans %}Succès{% endtrans %}{% endblock %}
 
 {% block body %}
     {% if marquePageAjoute %}
-        <h1>Marque-page ajouté avec succès !</h1>
-        <p>Merci d'avoir ajouté un marque-page.</p>
+        <h1>{% trans %}Marque-page ajouté avec succès !{% endtrans %}</h1>
+        <p>{% trans %}Merci d'avoir ajouté un marque-page.{% endtrans %}</p>
     {% elseif marquePageModifie %}
-        <h1>Marque-page modifié avec succès !</h1>
-        <p>Merci d'avoir modifié un marque-page.</p>
+        <h1>{% trans %}Marque-page modifié avec succès !{% endtrans %}</h1>
+        <p>{% trans %}Merci d'avoir modifié un marque-page.{% endtrans %}</p>
     {% endif %}
-    <a href="{{ retour_url }}">Retour à la liste des marque-pages</a>
+    <a href="{{ retour_url }}">{% trans %}Retour à la liste des marque-pages{% endtrans %}</a>
 {% endblock %}

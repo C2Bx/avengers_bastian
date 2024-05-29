@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détails du Livre{% endblock %}
+{% block title %}{{ 'Détails du Livre'|trans }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -9,46 +9,46 @@
 
 {% block body %}
 <div class="container mt-5">
-    <h1 class="mb-4">Détails du Livre</h1>
+    <h1 class="mb-4">{{ 'Détails du Livre'|trans }}</h1>
 
     <section>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">{{ livre.titre|default('Titre inconnu') }}</h5>
+                <h5 class="card-title">{{ livre.titre|default('Titre inconnu'|trans) }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">
-                    {{ livre.auteur.nom|default('Auteur inconnu') }} {{ livre.auteur.prenom|default('Prénom inconnu') }}
+                    {{ livre.auteur.nom|default('Auteur inconnu'|trans) }} {{ livre.auteur.prenom|default('Prénom inconnu'|trans) }}
                 </h6>
-                <p class="card-text">Description du livre</p>
+                <p class="card-text">{{ 'Description du livre'|trans }}</p>
 
                 <table class="table">
                     <tbody>
                         <tr>
-                            <th scope="row">ID</th>
-                            <td>{{ livre.id|default('ID inconnu') }}</td>
+                            <th scope="row">{{ 'ID'|trans }}</th>
+                            <td>{{ livre.id|default('ID inconnu'|trans) }}</td>
                         </tr>
                         <tr>
-                            <th scope="row">Titre</th>
-                            <td>{{ livre.titre|default('Titre inconnu') }}</td>
+                            <th scope="row">{{ 'Titre'|trans }}</th>
+                            <td>{{ livre.titre|default('Titre inconnu'|trans) }}</td>
                         </tr>
                         <tr>
-                            <th scope="row">Auteur</th>
-                            <td>{{ livre.auteur.nom|default('Nom inconnu') }} {{ livre.auteur.prenom|default('Prénom inconnu') }}</td>
+                            <th scope="row">{{ 'Auteur'|trans }}</th>
+                            <td>{{ livre.auteur.nom|default('Nom inconnu'|trans) }} {{ livre.auteur.prenom|default('Prénom inconnu'|trans) }}</td>
                         </tr>
                         <tr>
-                            <th scope="row">Année de Parution</th>
-                            <td>{{ livre.anneeParution ? livre.anneeParution|date('Y') : 'Année de parution inconnue' }}</td>
+                            <th scope="row">{{ 'Année de Parution'|trans }}</th>
+                            <td>{{ livre.anneeParution ? livre.anneeParution|date('Y') : 'Année de parution inconnue'|trans }}</td>
                         </tr>
                         <tr>
-                            <th scope="row">ISBN</th>
-                            <td>{{ livre.isbn|default('ISBN inconnu') }}</td>
+                            <th scope="row">{{ 'ISBN'|trans }}</th>
+                            <td>{{ livre.isbn|default('ISBN inconnu'|trans) }}</td>
                         </tr>
                         <tr>
-                            <th scope="row">Genre</th>
-                            <td>{{ livre.genre|default('Genre inconnu') }}</td>
+                            <th scope="row">{{ 'Genre'|trans }}</th>
+                            <td>{{ livre.genre|default('Genre inconnu'|trans) }}</td>
                         </tr>
                         <tr>
-                            <th scope="row">Nombre de Pages</th>
-                            <td>{{ livre.nombrePages|default('Nombre de pages inconnu') }}</td>
+                            <th scope="row">{{ 'Nombre de Pages'|trans }}</th>
+                            <td>{{ livre.nombrePages|default('Nombre de pages inconnu'|trans) }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -56,8 +56,8 @@
         </div>
     </section>
     <div class="mt-3">
-        <a href="{{ path('livres_liste') }}" class="btn btn-dark">Retour à la liste</a>
-        <a href="{{ path('livre_modif', {'id': livre.id}) }}" class="btn btn-secondary">Modifier</a>
+        <a href="{{ path('livres_liste') }}" class="btn btn-dark">{{ 'Retour à la liste'|trans }}</a>
+        <a href="{{ path('modifier_livre', {'id': livre.id}) }}" class="btn btn-secondary">{{ 'Modifier'|trans }}</a>
     </div>
 </div>
 {% endblock %}

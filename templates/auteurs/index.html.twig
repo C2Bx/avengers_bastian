@@ -1,33 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Auteurs{% endblock %}
+{% block title %}{{ 'Liste des Auteurs'|trans }}{% endblock %}
 
-{% block head %}
+{% block stylesheets %}
     {{ parent() }}
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
 {% endblock %}
 
 {% block body %}
 <div class="container mt-5">
     <div class="row mb-4">
         <div class="col-md-12">
-            <form action="{{ path('app_auteur') }}" method="get" class="form-inline">
+            <form action="{{ path('app_auteur', {'_locale': app.request.locale}) }}" method="get" class="form-inline">
                 <div class="form-group mr-2">
-                    <select class="form-control" name="auteurId" aria-label="Choisir un auteur">
-                        <option value="">Choisir un auteur</option>
+                    <select class="form-control" name="auteurId" aria-label="{{ 'Choisir un auteur'|trans }}">
+                        <option value="">{{ 'Choisir un auteur'|trans }}</option>
                         {% for auteur in tousLesAuteurs %}
                             <option value="{{ auteur.id }}" {{ auteur.id == auteurId ? 'selected' : '' }}>{{ auteur.nom }} {{ auteur.prenom }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="form-group mr-2">
-                    <select class="form-control" name="sortOrder" aria-label="Trier par ordre">
-                        <option value="asc" {{ 'asc' == sortOrder ? 'selected' : '' }}>Croissant</option>
-                        <option value="desc" {{ 'desc' == sortOrder ? 'selected' : '' }}>Décroissant</option>
+                    <select class="form-control" name="sortOrder" aria-label="{{ 'Trier par ordre'|trans }}">
+                        <option value="asc" {{ 'asc' == sortOrder ? 'selected' : '' }}>{{ 'Croissant'|trans }}</option>
+                        <option value="desc" {{ 'desc' == sortOrder ? 'selected' : '' }}>{{ 'Décroissant'|trans }}</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-dark">Filtrer</button>
-                <a href="{{ path('auteur_ajout') }}" class="btn btn-secondary">Ajouter un auteur</a>
+                <button type="submit" class="btn btn-dark">{{ 'Filtrer'|trans }}</button>
+                <a href="{{ path('auteur_ajout', {'_locale': app.request.locale}) }}" class="btn btn-secondary">{{ 'Ajouter un auteur'|trans }}</a>
             </form>
         </div>
     </div>
@@ -35,12 +36,12 @@
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Nom</th>
-                            <th>Prénom</th>
-                            <th>Actions</th>
+                            <th>{{ 'Nom'|trans }}</th>
+                            <th>{{ 'Prénom'|trans }}</th>
+                            <th>{{ 'Actions'|trans }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,12 +50,12 @@
                                 <td>{{ auteur.nom }}</td>
                                 <td>{{ auteur.prenom }}</td>
                                 <td>
-                                    <a href="{{ path('auteur_modif', {'id': auteur.id}) }}" class="btn btn-secondary">Modifier</a>
+                                    <a href="{{ path('auteur_modif', {'id': auteur.id, '_locale': app.request.locale}) }}" class="btn btn-secondary">{{ 'Modifier'|trans }}</a>
                                 </td>
                             </tr>
                         {% else %}
                             <tr>
-                                <td colspan="3">Aucun auteur trouvé.</td>
+                                <td colspan="3">{{ 'Aucun auteur trouvé.'|trans }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>

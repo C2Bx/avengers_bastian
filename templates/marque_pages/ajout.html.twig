@@ -1,35 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% set pageTitle = mode == 'ajouter' ? 'Ajouter un marque-page' : 'Modifier un marque-page' %}
-{% set actionButton = mode == 'ajouter' ? 'Ajouter' : 'Modifier' %}
+{% set pageTitle = mode == 'ajouter' ? 'Ajouter un marque-page'|trans : 'Modifier un marque-page'|trans %}
+{% set actionButton = mode == 'ajouter' ? 'Ajouter'|trans : 'Modifier'|trans %}
 
-{% block title %}{{ pageTitle }}{% endblock %}
+{% block title %}
+    {{ pageTitle }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}"> 
+{% endblock %}
 
 {% block body %}
-<div class="container">
-    <h1 class="mt-5">{{ pageTitle }}</h1>
+<div class="container mt-5">
+    <h1 class="text-center mb-4 display-4">{{ pageTitle }}</h1>
 
-    {{ form_start(form) }}
+    {{ form_start(form, {'attr': {'id': 'marquePageForm'}}) }}
         <div class="form-group">
-            {{ form_label(form.url, 'URL', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_label(form.url, 'URL'|trans, {'label_attr': {'class': 'form-label'}}) }}
             {{ form_widget(form.url, {'attr': {'class': 'form-control'}}) }}
         </div>
 
         <div class="form-group">
-            {{ form_label(form.motsCles, 'Mots-clés existants', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_label(form.motsCles, 'Mots-clés existants'|trans, {'label_attr': {'class': 'form-label'}}) }}
             {{ form_widget(form.motsCles, {'attr': {'class': 'form-control', 'multiple': 'multiple'}}) }}
         </div>
 
-        <!-- Nouveau champ pour ajouter des mots clés -->
+        <!-- New field to add new keywords -->
         <div class="form-group">
-            <label for="new_motsCles" class="form-label">Ajouter de nouveaux Mots-clés</label>
-            <input type="text" id="new_motsCles" name="new_motsCles" class="form-control" placeholder="Entrez les nouveaux mots clés séparés par des virgules" />
-        </div>
-
-        <div class="text-right">
-            <button type="submit" class="btn btn-secondary mt-3">{{ actionButton }}</button>
-            <a href="{{ path('marque_pages_index') }}" class="btn btn-dark mt-3">Retour à la liste</a>
+            <label for="new_motsCles" class="form-label">{% trans %}Ajouter de nouveaux Mots-clés{% endtrans %}</label>
+            <input type="text" id="new_motsCles" name="new_motsCles" class="form-control" placeholder="{% trans %}Entrez les nouveaux mots clés séparés par des virgules{% endtrans %}" />
         </div>
     {{ form_end(form) }}
+
+    <!-- Action buttons placed at the bottom of the form -->
+    <div class="form-group mt-4">
+        <button type="button" class="btn btn-secondary btn-cartoon" onclick="document.getElementById('marquePageForm').submit();">{{ actionButton }}</button>
+        <a href="{{ path('marque_pages_index', {'_locale': app.request.locale}) }}" class="btn btn-dark btn-cartoon">{% trans %}Retour à la liste{% endtrans %}</a>
+    </div>
 </div>
+
 {% endblock %}

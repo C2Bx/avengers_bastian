@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Succès{% endblock %}
+{% block title %}{{ 'Succès'|trans }}{% endblock %}
 
 {% block body %}
     {% if livreAjoute %}
-        <h1>Livre ajouté avec succès !</h1>
-        <p>Merci d'avoir ajouté un livre.</p>
+        <h1>{{ 'Livre ajouté avec succès !'|trans }}</h1>
+        <p>{{ 'Merci d\'avoir ajouté un livre.'|trans }}</p>
     {% elseif livreModifie %}
-        <h1>Livre modifié avec succès !</h1>
-        <p>Merci d'avoir modifié un livre.</p>
+        <h1>{{ 'Livre modifié avec succès !'|trans }}</h1>
+        <p>{{ 'Merci d\'avoir modifié un livre.'|trans }}</p>
     {% endif %}
-    <a href="{{ retour_url }}">Retour à la liste des livres</a>
+    <a href="{{ retour_url }}">{{ 'Retour à la liste des livres'|trans }}</a>
 {% endblock %}

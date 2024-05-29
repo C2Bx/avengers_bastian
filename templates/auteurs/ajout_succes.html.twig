@@ -1,14 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Succès{% endblock %}
+{% block title %}{% trans %}Succès{% endtrans %}{% endblock %}
 
 {% block body %}
-    {% if auteurAjoute %}
-        <h1>Auteur ajouté avec succès !</h1>
-        <p>Merci d'avoir ajouté un auteur.</p>
-    {% elseif auteurModifie %}
-        <h1>Auteur modifié avec succès !</h1>
-        <p>Merci d'avoir modifié un auteur.</p>
-    {% endif %}
-    <a href="{{ retour_url }}">Retour à la liste des auteurs</a>
+    <div class="container text-center my-5 p-4">
+        {% if auteurAjoute %}
+            <h1 class="display-4 text-success">{% trans %}Auteur ajouté avec succès !{% endtrans %}</h1>
+            <p class="lead">{% trans %}Merci d'avoir ajouté un auteur.{% endtrans %}</p>
+        {% elseif auteurModifie %}
+            <h1 class="display-4 text-warning">{% trans %}Auteur modifié avec succès !{% endtrans %}</h1>
+            <p class="lead">{% trans %}Merci d'avoir modifié un auteur.{% endtrans %}</p>
+        {% endif %}
+        <a href="{{ retour_url }}" class="btn btn-dark btn-cartoon mt-4">
+            {% trans %}Retour à la liste des auteurs{% endtrans %}
+        </a>
+    </div>
 {% endblock %}
